@@ -3,7 +3,7 @@
 # This program is licensed under the Apache License 2.0.
 # See LICENSE or go to <https://www.apache.org/licenses/LICENSE-2.0> for full license details.
 
-from typing import Dict, List, Tuple
+from typing import Any, Dict, List, Tuple, Union
 
 import requests
 
@@ -22,11 +22,9 @@ def parse_diff_body(diff_body: str) -> Dict[str, List[Tuple[str, str]]]:
 
     # Split by sections
     file_diffs = [
-        file_str.rpartition(f"{file_name}\n")[-1].split("@@ -")[1:]
+        [section.partition("\n") for section in file_str.rpartition(f"{file_name}\n")[-1].split("@@ -")[1:]]
         for file_str, file_name in zip(file_split, file_names)
     ]
-
-    file_diffs = [[section.partition("\n") for section in file] for file in file_diffs]
 
     return {
         file_name: [(f"@@ -{section_diff[0]}", section_diff[-1]) for section_diff in file_diff]
@@ -52,11 +50,11 @@ class PullRequest:
         self.reset()
 
     def reset(self) -> None:
-        self._info = None
-        self._diff = None
+        self._info: Union[Dict[str, Any], None] = None
+        self._diff: Union[str, None] = None
 
     @property
-    def info(self):
+    def info(self) -> Dict[str, Any]:
         if not isinstance(self._info, dict):
             response = requests.get(ROUTE_URL.format(repo_name=self.repo_name, pr_num=self.pr_num))
             if response.status_code != 200:
@@ -65,7 +63,7 @@ class PullRequest:
             self._info = response.json()
         return self._info
 
-    def get_info(self) -> Dict[str, str]:
+    def get_info(self) -> Dict[str, Union[str, Dict[str, str]]]:
         """Parses high-level information from the Pull Request"""
 
         return {
