@@ -1,9 +1,9 @@
 # this target runs checks on all files
 quality:
 	isort . -c
-	flake8 ./
-	mypy .
-	pydocstyle ghapi_client/
+	flake8
+	mypy
+	pydocstyle
 	black --check .
 	bandit -r . -c pyproject.toml
 	autoflake -r .
