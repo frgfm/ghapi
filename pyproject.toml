@@ -104,6 +104,7 @@ implicit_reexport = false
 
 [[tool.mypy.overrides]]
 module = [
+    "requests.*",
 ]
 ignore_missing_imports = true
 
