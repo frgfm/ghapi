@@ -92,7 +92,6 @@ zip-safe = true
 [tool.setuptools.packages.find]
 exclude = ["docs*", "tests*"]
 
-
 [tool.mypy]
 files = "ghapi_client/"
 show_error_codes = true
