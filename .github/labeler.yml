@@ -1,0 +1,11 @@
+'ext: docs':
+- docs/*
+
+'ext: tests':
+- tests/*
+
+'topic: ci':
+- .github/*
+
+'topic: build':
+- setup.py

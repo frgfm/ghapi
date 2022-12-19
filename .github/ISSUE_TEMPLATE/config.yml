@@ -1,0 +1,5 @@
+blank_issues_enabled: true
+contact_links:
+  - name: Usage questions
+    url: https://github.com/frgfm/ghapi/discussions
+    about: Ask questions and discuss with other ghapi_client community members
