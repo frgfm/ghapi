@@ -2,7 +2,7 @@
 ghapi_client
 *****************************
 
-Here you will find the beautiful documentation to my great Python library |:hugging_face:|
+Welcome to the documentation of this Python client for the GitHub API |:hugging_face:|
 
 
 .. toctree::
@@ -12,6 +12,12 @@ Here you will find the beautiful documentation to my great Python library |:hugg
 
    installing
 
+.. toctree::
+   :maxdepth: 2
+   :caption: Package Reference
+   :hidden:
+
+   pulls
 
 .. toctree::
    :maxdepth: 1
