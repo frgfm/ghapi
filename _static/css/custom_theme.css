@@ -1,0 +1,10 @@
+h1 {
+    font-size: 240%;
+}
+
+/* Github button */
+
+.github-repo {
+    display: flex;
+    justify-content: center;
+}
