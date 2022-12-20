@@ -29,7 +29,7 @@
 
 This project uses [GitHub API](https://docs.github.com/en/rest) to fetch information from GitHub using a Python wrapper.
 
-You can find the exhaustive list of supported features in the [documentation](https://frgfm.github.io/ghapi), then use it as follows:
+You can find the exhaustive list of supported features in the [documentation](https://frgfm.github.io/ghapi). For instance, you can retrieve basic information about your pull request as follows:
 
 ```python
 from ghapi_client.pulls import PullRequest
@@ -74,6 +74,7 @@ pr.get_info()
   'sha': 'd49f4a3d847e130e99c3d20311e1450f074fd29f'}}
 ```
 
+If you're interested in reviewing the pull request, you might be interested in the code diff:
 ```python
 # Retrieve the code diff
 full_diff = pr.get_diff()
@@ -122,7 +123,7 @@ The full package documentation is available [here](https://frgfm.github.io/ghapi
 
 Feeling like extending the range of possibilities of CAM? Or perhaps submitting a paper implementation? Any sort of contribution is greatly appreciated!
 
-You can find a short guide in [`CONTRIBUTING`](CONTRIBUTING) to help grow this project!
+You can find a short guide in [`CONTRIBUTING`](CONTRIBUTING.md) to help grow this project!
 
 
 
