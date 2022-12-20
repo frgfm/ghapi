@@ -1,0 +1,17 @@
+'module: pulls':
+- ghapi_client/pulls.py
+
+'module: exceptions':
+- ghapi_client/exceptions.py
+
+'ext: docs':
+- docs/*
+
+'ext: tests':
+- tests/*
+
+'topic: ci':
+- .github/*
+
+'topic: build':
+- setup.py
