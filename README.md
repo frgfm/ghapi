@@ -2,13 +2,13 @@
 
 <p align="center">
   <a href="https://github.com/frgfm/ghapi/actions?query=workflow%3Abuilds">
-    <img alt="CI Status" src="https://img.shields.io/github/workflow/status/frgfm/ghapi/builds?label=CI&logo=github&style=flat-square">
+    <img alt="CI Status" src="https://img.shields.io/github/actions/workflow/status/frgfm/ghapi/builds.yml?branch=main&label=CI&logo=github&style=flat-square">
   </a>
   <a href="https://frgfm.github.io/ghapi">
-    <img alt="Documentation Status" src="https://img.shields.io/github/workflow/status/frgfm/ghapi/docs?label=docs&logo=read-the-docs&style=flat-square">
+    <img alt="Documentation Status" src="https://img.shields.io/github/actions/workflow/status/frgfm/ghapi/docs.yaml?branch=main&label=docs&logo=read-the-docs&style=flat-square">
   </a>
   <a href="https://codecov.io/gh/frgfm/ghapi">
-    <img src="https://img.shields.io/codecov/c/github/frgfm/ghapi.svg?logo=codecov&style=flat-square" alt="Test coverage percentage">
+    <img src="https://codecov.io/gh/frgfm/ghapi/branch/main/graph/badge.svg?token=ISgEpF7y0A" alt="Test coverage percentage">
   </a>
   <a href="https://github.com/ambv/black">
     <img src="https://img.shields.io/badge/code%20style-black-000000.svg?style=flat-square" alt="black">
