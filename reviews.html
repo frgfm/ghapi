@@ -3,10 +3,10 @@
   <head><meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width,initial-scale=1"/>
     <meta name="color-scheme" content="light dark"><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
-<link rel="index" title="Index" href="genindex.html" /><link rel="search" title="Search" href="search.html" /><link rel="next" title="Installation" href="installing.html" />
+<link rel="index" title="Index" href="genindex.html" /><link rel="search" title="Search" href="search.html" /><link rel="next" title="Changelog" href="changelog.html" /><link rel="prev" title="ghapi_client.pulls" href="pulls.html" />
 
     <!-- Generated with Sphinx 5.3.0 and Furo 2022.12.07 -->
-        <title>ghapi_client</title>
+        <title>ghapi_client.reviews - ghapi_client</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
     <link rel="stylesheet" type="text/css" href="_static/styles/furo.css?digest=91d0f0d1c444bdcb17a68e833c7a53903343c195" />
     <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
@@ -125,7 +125,7 @@
       </label>
     </div>
     <div class="header-center">
-      <a href="#"><div class="brand">ghapi_client</div></a>
+      <a href="index.html"><div class="brand">ghapi_client</div></a>
     </div>
     <div class="header-right">
       <div class="theme-toggle-container theme-toggle-header">
@@ -145,7 +145,7 @@
   <aside class="sidebar-drawer">
     <div class="sidebar-container">
       
-      <div class="sidebar-sticky"><a class="sidebar-brand" href="#">
+      <div class="sidebar-sticky"><a class="sidebar-brand" href="index.html">
   
   
   <span class="sidebar-brand-text">ghapi_client</span>
@@ -161,9 +161,9 @@
 <li class="toctree-l1"><a class="reference internal" href="installing.html">Installation</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Package Reference</span></p>
-<ul>
+<ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="pulls.html">ghapi_client.pulls</a></li>
-<li class="toctree-l1"><a class="reference internal" href="reviews.html">ghapi_client.reviews</a></li>
+<li class="toctree-l1 current current-page"><a class="current reference internal" href="#">ghapi_client.reviews</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Notes</span></p>
 <ul>
@@ -188,7 +188,7 @@
         </a>
         <div class="content-icon-container">
           <div class="edit-this-page">
-  <a class="muted-link" href="https://github.com/frgfm/ghapi/edit/main/docs/source/index.rst" title="Edit this page">
+  <a class="muted-link" href="https://github.com/frgfm/ghapi/edit/main/docs/source/reviews.rst" title="Edit this page">
     <svg aria-hidden="true" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
       <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
       <path d="M4 20h4l10.5 -10.5a1.5 1.5 0 0 0 -4 -4l-10.5 10.5v4" />
@@ -210,15 +210,44 @@
           </label>
         </div>
         <article role="main">
-          <section id="python-client-for-github-api">
-<h1>Python client for GitHub API<a class="headerlink" href="#python-client-for-github-api" title="Permalink to this heading">#</a></h1>
-<p>Welcome to the documentation of this Python client for the GitHub API 🤗</p>
-<div class="toctree-wrapper compound">
+          <section id="ghapi-client-reviews">
+<h1>ghapi_client.reviews<a class="headerlink" href="#ghapi-client-reviews" title="Permalink to this heading">#</a></h1>
+<dl class="py class">
+<dt class="sig sig-object py" id="ghapi_client.reviews.Review">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">ghapi_client.reviews.</span></span><span class="sig-name descname"><span class="pre">Review</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pr</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="pulls.html#ghapi_client.pulls.PullRequest" title="ghapi_client.pulls.PullRequest"><span class="pre">PullRequest</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">token</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ghapi_client/reviews.html#Review"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ghapi_client.reviews.Review" title="Permalink to this definition">#</a></dt>
+<dd><p>Implements a Review object</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">ghapi_client.pulls</span> <span class="kn">import</span> <span class="n">PullRequest</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">pr</span> <span class="o">=</span> <span class="n">PullRequest</span><span class="p">(</span><span class="s2">&quot;frgfm/torch-cam&quot;</span><span class="p">,</span> <span class="mi">187</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">ghapi_client.reviews</span> <span class="kn">import</span> <span class="n">Review</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">review</span> <span class="o">=</span> <span class="n">Review</span><span class="p">(</span><span class="n">pr</span><span class="p">,</span> <span class="n">token</span><span class="o">=</span><span class="s2">&quot;MY_SECRET_TOKEN&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">review</span><span class="o">.</span><span class="n">add_comment</span><span class="p">(</span><span class="s2">&quot;README.md&quot;</span><span class="p">,</span> <span class="s2">&quot;This is weird!&quot;</span><span class="p">,</span> <span class="mi">9</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">review</span><span class="o">.</span><span class="n">submit</span><span class="p">(</span><span class="s2">&quot;Thanks for the PR!</span><span class="se">\n</span><span class="s2">I left a few comments!&quot;</span><span class="p">)</span>
+</pre></div>
 </div>
-<div class="toctree-wrapper compound">
-</div>
-<div class="toctree-wrapper compound">
-</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>pr</strong> – a pull request object</p></li>
+<li><p><strong>token</strong> – your GitHub token (cf. <a class="reference external" href="https://github.com/settings/tokens">https://github.com/settings/tokens</a>)</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="ghapi_client.reviews.Review.submit">
+<span class="sig-name descname"><span class="pre">submit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">body</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">action</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ReviewAction</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">ReviewAction.COMMENT</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/ghapi_client/reviews.html#Review.submit"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ghapi_client.reviews.Review.submit" title="Permalink to this definition">#</a></dt>
+<dd><p>Submit a review</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>body</strong> – the body text of the pull request review.</p></li>
+<li><p><strong>action</strong> – the review action you want to perform.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
 </section>
 
         </article>
@@ -226,16 +255,26 @@
       <footer>
         
         <div class="related-pages">
-          <a class="next-page" href="installing.html">
+          <a class="next-page" href="changelog.html">
               <div class="page-info">
                 <div class="context">
                   <span>Next</span>
                 </div>
-                <div class="title">Installation</div>
+                <div class="title">Changelog</div>
               </div>
               <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
             </a>
-          
+          <a class="prev-page" href="pulls.html">
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+              <div class="page-info">
+                <div class="context">
+                  <span>Previous</span>
+                </div>
+                
+                <div class="title">ghapi_client.pulls</div>
+                
+              </div>
+            </a>
         </div>
         <div class="bottom-of-page">
           <div class="left-details">
@@ -273,7 +312,11 @@
         <div class="toc-tree-container">
           <div class="toc-tree">
             <ul>
-<li><a class="reference internal" href="#">Python client for GitHub API</a><ul>
+<li><a class="reference internal" href="#">ghapi_client.reviews</a><ul>
+<li><a class="reference internal" href="#ghapi_client.reviews.Review"><code class="docutils literal notranslate"><span class="pre">Review</span></code></a><ul>
+<li><a class="reference internal" href="#ghapi_client.reviews.Review.submit"><code class="docutils literal notranslate"><span class="pre">Review.submit()</span></code></a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
