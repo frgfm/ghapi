@@ -11,7 +11,7 @@ from .exceptions import HTTPRequestException
 
 __all__ = ["PullRequest"]
 
-ROUTE_URL = "https://api.github.com/repos/{repo_name}/pulls/{pr_num}"
+ROUTE_URL = "https://api.github.com/repos/{owner}/{repo}/pulls/{pull_number}"
 
 
 def parse_diff_body(diff_body: str) -> Dict[str, List[Tuple[str, str]]]:
@@ -36,17 +36,19 @@ class PullRequest:
     """Implements a Pull Request object
 
     >>> from ghapi_client.pulls import PullRequest
-    >>> pr = PullRequest("frgfm/torch-cam", 187)
+    >>> pr = PullRequest("frgfm", "torch-cam", 187)
     >>> pr.get_info()
 
     Args:
-        repo_name: the full repository name
-        pr_num: the PR number
+        owner: GitHub login of the repository's owner
+        repo: name of the repository
+        pull_number: the PR number
     """
 
-    def __init__(self, repo_name: str, pr_num: int) -> None:
-        self.repo_name = repo_name
-        self.pr_num = pr_num
+    def __init__(self, owner: str, repo: str, pull_number: int) -> None:
+        self.owner = owner
+        self.repo = repo
+        self.pull_number = pull_number
         self.reset()
 
     def reset(self) -> None:
@@ -56,7 +58,7 @@ class PullRequest:
     @property
     def info(self) -> Dict[str, Any]:
         if not isinstance(self._info, dict):
-            response = requests.get(ROUTE_URL.format(repo_name=self.repo_name, pr_num=self.pr_num))
+            response = requests.get(ROUTE_URL.format(owner=self.owner, repo=self.repo, pull_number=self.pull_number))
             if response.status_code != 200:
                 raise HTTPRequestException(response.status_code, response.text)
 
@@ -88,7 +90,7 @@ class PullRequest:
     def diff(self) -> str:
         if not isinstance(self._diff, str):
             response = requests.get(
-                ROUTE_URL.format(repo_name=self.repo_name, pr_num=self.pr_num),
+                ROUTE_URL.format(owner=self.owner, repo=self.repo, pull_number=self.pull_number),
                 headers={"Accept": "application/vnd.github.v4.diff"},
             )
             if response.status_code != 200:

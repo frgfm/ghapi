@@ -34,7 +34,7 @@ You can find the exhaustive list of supported features in the [documentation](ht
 ```python
 from ghapi_client.pulls import PullRequest
 
-pr = PullRequest("frgfm/torch-cam", 187)
+pr = PullRequest("frgfm", "torch-cam", 187)
 # Get the PR information
 pr.get_info()
 ```
