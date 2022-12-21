@@ -1,6 +1,9 @@
 'module: pulls':
 - ghapi_client/pulls.py
 
+'module: reviews':
+- ghapi_client/reviews.py
+
 'module: exceptions':
 - ghapi_client/exceptions.py
 
