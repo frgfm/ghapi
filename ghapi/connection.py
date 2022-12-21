@@ -16,7 +16,7 @@ __all__ = ["Connection"]
 class Connection:
     """Implements a GH API Connection object
 
-    >>> from ghapi_client.connection import Connection
+    >>> from ghapi.connection import Connection
     >>> con = Connection("DUMMY_TOKEN")
 
     Args:

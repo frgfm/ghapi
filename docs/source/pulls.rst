@@ -1,8 +1,8 @@
-ghapi_client.pulls
-==================
+ghapi.pulls
+===========
 
 
-.. currentmodule:: ghapi_client.pulls
+.. currentmodule:: ghapi.pulls
 
 
 .. autoclass:: PullRequest

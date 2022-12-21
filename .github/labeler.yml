@@ -1,14 +1,14 @@
 'module: pulls':
-- ghapi_client/pulls.py
+- ghapi/pulls.py
 
 'module: reviews':
-- ghapi_client/reviews.py
+- ghapi/reviews.py
 
 'module: exceptions':
-- ghapi_client/exceptions.py
+- ghapi/exceptions.py
 
 'module: connection':
-- ghapi_client/connection.py
+- ghapi/connection.py
 
 'ext: docs':
 - docs/*

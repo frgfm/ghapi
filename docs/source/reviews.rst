@@ -1,8 +1,8 @@
-ghapi_client.reviews
-====================
+ghapi.reviews
+=============
 
 
-.. currentmodule:: ghapi_client.reviews
+.. currentmodule:: ghapi.reviews
 
 
 .. autoclass:: Review

@@ -9,17 +9,17 @@ from pathlib import Path
 
 from setuptools import setup
 
-PKG_NAME = "ghapi_client"
+PKG_INDEX = "ghapi-client"
 VERSION = os.getenv("BUILD_VERSION", "0.1.0.dev0")
 
 
 if __name__ == "__main__":
 
-    print(f"Building wheel {PKG_NAME}-{VERSION}")
+    print(f"Building wheel {PKG_INDEX}-{VERSION}")
 
     # Dynamically set the __version__ attribute
     cwd = Path(__file__).parent.absolute()
-    with open(cwd.joinpath("ghapi_client", "version.py"), "w", encoding="utf-8") as f:
+    with open(cwd.joinpath("ghapi", "version.py"), "w", encoding="utf-8") as f:
         f.write(f'__version__ = "{VERSION}"\n')
 
-    setup(name=PKG_NAME, version=VERSION)
+    setup(name=PKG_INDEX, version=VERSION)

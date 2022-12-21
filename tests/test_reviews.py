@@ -1,8 +1,8 @@
 import pytest
 
-from ghapi_client.exceptions import HTTPRequestException
-from ghapi_client.pulls import PullRequest
-from ghapi_client.reviews import Review
+from ghapi.exceptions import HTTPRequestException
+from ghapi.pulls import PullRequest
+from ghapi.reviews import Review
 
 
 @pytest.mark.parametrize(

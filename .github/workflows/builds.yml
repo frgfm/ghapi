@@ -31,4 +31,4 @@ jobs:
           python -m pip install --upgrade pip
           pip install -e . --upgrade
       - name: Import package
-        run: python -c "import ghapi_client; print(ghapi_client.__version__)"
+        run: python -c "import ghapi; print(ghapi.__version__)"

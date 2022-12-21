@@ -1,7 +1,7 @@
 import pytest
 from requests.exceptions import ConnectionError, MissingSchema
 
-from ghapi_client.connection import Connection
+from ghapi.connection import Connection
 
 
 @pytest.mark.parametrize(
