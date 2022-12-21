@@ -3,10 +3,10 @@
   <head><meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width,initial-scale=1"/>
     <meta name="color-scheme" content="light dark"><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
-<link rel="index" title="Index" href="genindex.html" /><link rel="search" title="Search" href="search.html" /><link rel="next" title="ghapi_client.pulls" href="pulls.html" /><link rel="prev" title="Installation" href="installing.html" />
+<link rel="index" title="Index" href="genindex.html" /><link rel="search" title="Search" href="search.html" /><link rel="next" title="ghapi.pulls" href="pulls.html" /><link rel="prev" title="Installation" href="installing.html" />
 
     <!-- Generated with Sphinx 5.3.0 and Furo 2022.12.07 -->
-        <title>ghapi_client.connection - ghapi_client</title>
+        <title>ghapi.connection - ghapi_client</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
     <link rel="stylesheet" type="text/css" href="_static/styles/furo.css?digest=91d0f0d1c444bdcb17a68e833c7a53903343c195" />
     <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
@@ -162,9 +162,9 @@
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Package Reference</span></p>
 <ul class="current">
-<li class="toctree-l1 current current-page"><a class="current reference internal" href="#">ghapi_client.connection</a></li>
-<li class="toctree-l1"><a class="reference internal" href="pulls.html">ghapi_client.pulls</a></li>
-<li class="toctree-l1"><a class="reference internal" href="reviews.html">ghapi_client.reviews</a></li>
+<li class="toctree-l1 current current-page"><a class="current reference internal" href="#">ghapi.connection</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pulls.html">ghapi.pulls</a></li>
+<li class="toctree-l1"><a class="reference internal" href="reviews.html">ghapi.reviews</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Notes</span></p>
 <ul>
@@ -211,13 +211,13 @@
           </label>
         </div>
         <article role="main">
-          <section id="ghapi-client-connection">
-<h1>ghapi_client.connection<a class="headerlink" href="#ghapi-client-connection" title="Permalink to this heading">#</a></h1>
+          <section id="ghapi-connection">
+<h1>ghapi.connection<a class="headerlink" href="#ghapi-connection" title="Permalink to this heading">#</a></h1>
 <dl class="py class">
-<dt class="sig sig-object py" id="ghapi_client.connection.Connection">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">ghapi_client.connection.</span></span><span class="sig-name descname"><span class="pre">Connection</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">token</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">url</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'https://api.github.com'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ghapi_client/connection.html#Connection"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ghapi_client.connection.Connection" title="Permalink to this definition">#</a></dt>
+<dt class="sig sig-object py" id="ghapi.connection.Connection">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">ghapi.connection.</span></span><span class="sig-name descname"><span class="pre">Connection</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">token</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">url</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'https://api.github.com'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ghapi/connection.html#Connection"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ghapi.connection.Connection" title="Permalink to this definition">#</a></dt>
 <dd><p>Implements a GH API Connection object</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">ghapi_client.connection</span> <span class="kn">import</span> <span class="n">Connection</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">ghapi.connection</span> <span class="kn">import</span> <span class="n">Connection</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">con</span> <span class="o">=</span> <span class="n">Connection</span><span class="p">(</span><span class="s2">&quot;DUMMY_TOKEN&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -243,7 +243,7 @@
                 <div class="context">
                   <span>Next</span>
                 </div>
-                <div class="title">ghapi_client.pulls</div>
+                <div class="title">ghapi.pulls</div>
               </div>
               <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
             </a>
@@ -295,8 +295,8 @@
         <div class="toc-tree-container">
           <div class="toc-tree">
             <ul>
-<li><a class="reference internal" href="#">ghapi_client.connection</a><ul>
-<li><a class="reference internal" href="#ghapi_client.connection.Connection"><code class="docutils literal notranslate"><span class="pre">Connection</span></code></a></li>
+<li><a class="reference internal" href="#">ghapi.connection</a><ul>
+<li><a class="reference internal" href="#ghapi.connection.Connection"><code class="docutils literal notranslate"><span class="pre">Connection</span></code></a></li>
 </ul>
 </li>
 </ul>

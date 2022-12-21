@@ -1,8 +1,8 @@
-ghapi_client.connection
-=======================
+ghapi.connection
+================
 
 
-.. currentmodule:: ghapi_client.connection
+.. currentmodule:: ghapi.connection
 
 
 .. autoclass:: Connection

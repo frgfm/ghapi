@@ -12,7 +12,7 @@ Install the last stable release of the package using `pip <https://pip.pypa.io/e
 
 .. code:: bash
 
-    pip install ghapi_client
+    pip install ghapi-client
 
 
 Via Conda
@@ -22,7 +22,7 @@ Install the last stable release of the package using `conda <https://docs.conda.
 
 .. code:: bash
 
-    conda install -c anaconda-channel ghapi_client
+    conda install -c frgfm ghapi
 
 
 Via Git

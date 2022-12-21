@@ -5,7 +5,7 @@
     <meta name="color-scheme" content="light dark"><link rel="index" title="Index" href="../../genindex.html" /><link rel="search" title="Search" href="../../search.html" />
 
     <!-- Generated with Sphinx 5.3.0 and Furo 2022.12.07 -->
-        <title>ghapi_client.pulls - ghapi_client</title>
+        <title>ghapi.pulls - ghapi_client</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/styles/furo.css?digest=91d0f0d1c444bdcb17a68e833c7a53903343c195" />
     <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
@@ -161,9 +161,9 @@
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Package Reference</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../connection.html">ghapi_client.connection</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../pulls.html">ghapi_client.pulls</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../reviews.html">ghapi_client.reviews</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../connection.html">ghapi.connection</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../pulls.html">ghapi.pulls</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../reviews.html">ghapi.reviews</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Notes</span></p>
 <ul>
@@ -201,7 +201,7 @@
           </label>
         </div>
         <article role="main">
-          <h1>Source code for ghapi_client.pulls</h1><div class="highlight"><pre>
+          <h1>Source code for ghapi.pulls</h1><div class="highlight"><pre>
 <span></span><span class="c1"># Copyright (C) 2022, François-Guillaume Fernandez.</span>
 
 <span class="c1"># This program is licensed under the Apache License 2.0.</span>
@@ -235,10 +235,10 @@
     <span class="p">}</span>
 
 
-<div class="viewcode-block" id="PullRequest"><a class="viewcode-back" href="../../pulls.html#ghapi_client.pulls.PullRequest">[docs]</a><span class="k">class</span> <span class="nc">PullRequest</span><span class="p">:</span>
+<div class="viewcode-block" id="PullRequest"><a class="viewcode-back" href="../../pulls.html#ghapi.pulls.PullRequest">[docs]</a><span class="k">class</span> <span class="nc">PullRequest</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;Implements a Pull Request object</span>
 
-<span class="sd">    &gt;&gt;&gt; from ghapi_client.pulls import PullRequest</span>
+<span class="sd">    &gt;&gt;&gt; from ghapi.pulls import PullRequest</span>
 <span class="sd">    &gt;&gt;&gt; pr = PullRequest(&quot;frgfm&quot;, &quot;torch-cam&quot;, 187)</span>
 <span class="sd">    &gt;&gt;&gt; pr.get_info()</span>
 
