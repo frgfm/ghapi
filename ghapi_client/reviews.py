@@ -14,7 +14,7 @@ from .pulls import PullRequest
 __all__ = ["Review"]
 
 ROUTES: Dict[str, str] = {
-    "create": "https://api.github.com/repos/{repo_name}/pulls/{pull_number}/reviews",
+    "create": "https://api.github.com/repos/{owner}/{repo}/pulls/{pull_number}/reviews",
 }
 
 
@@ -65,7 +65,7 @@ class Review:
             action: the review action you want to perform.
         """
         response = requests.post(
-            ROUTES["create"].format(repo_name=self.pr.repo_name, pull_number=self.pr.pull_number),
+            ROUTES["create"].format(owner=self.pr.owner, repo=self.pr.repo, pull_number=self.pr.pull_number),
             json={
                 "body": body,
                 "event": action,
