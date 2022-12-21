@@ -23,8 +23,8 @@ class ReviewAction(str, Enum):
 class Review:
     r"""Implements a Review object
 
-    >>> from ghapi.pulls import PullRequest
-    >>> pr = PullRequest("frgfm", "torch-cam", 187)
+    >>> from ghapi import Repo, PullRequest, Review
+    >>> pr = PullRequest(Repo("frgfm", "torch-cam"), 187)
     >>> from ghapi.reviews import Review
     >>> pr.conn.set_token("MY_DUMMY_TOKEN")
     >>> review = Review(pr, conn)
@@ -68,7 +68,11 @@ class Review:
         """
         response = requests.post(
             self.conn.resolve(
-                self.ROUTES["create"].format(owner=self.pr.owner, repo=self.pr.repo, pull_number=self.pr.pull_number)
+                self.ROUTES["create"].format(
+                    owner=self.pr.repo.owner,
+                    repo=self.pr.repo.name,
+                    pull_number=self.pr.pull_number,
+                )
             ),
             json={
                 "body": body,
