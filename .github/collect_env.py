@@ -18,7 +18,7 @@ import sys
 from collections import namedtuple
 
 try:
-    import ghapi_client
+    import ghapi
 
     PKG_AVAILABLE = True
 except (ImportError, NameError, AttributeError, OSError):
@@ -132,7 +132,7 @@ def get_env_info():
     run_lambda = run
 
     if PKG_AVAILABLE:
-        pkg_str = ghapi_client.__version__
+        pkg_str = ghapi.__version__
     else:
         pkg_str = "N/A"
 
@@ -144,7 +144,7 @@ def get_env_info():
 
 
 env_info_fmt = """
-ghapi_client version: {pkg_version}
+ghapi-client version: {pkg_version}
 
 OS: {os}
 

@@ -67,5 +67,5 @@ jobs:
           license: 'Apache-2.0'
           owner: 'François-Guillaume Fernandez'
           starting-year: 2022
-          folders: 'ghapi_client,docs,.github'
+          folders: 'ghapi,docs,.github'
           ignore-files: 'version.py,__init__.py'

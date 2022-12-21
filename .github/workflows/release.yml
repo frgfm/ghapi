@@ -51,8 +51,8 @@ jobs:
       - name: Install package
         run: |
           python -m pip install --upgrade pip
-          pip install {{cookiecutter.package_name}}
-          python -c "import ghapi_client; print(ghapi_client.__version__)"
+          pip install ghapi-client
+          python -c "import ghapi; print(ghapi.__version__)"
 
   conda-publish:
     runs-on: ubuntu-latest
@@ -95,5 +95,5 @@ jobs:
           auto-activate-base: true
       - name: Install package
         run: |
-          conda install -c frgfm ghapi_client
-          python -c "import ghapi_client; print(ghapi_client.__version__)"
+          conda install -c frgfm ghapi
+          python -c "import ghapi; print(ghapi.__version__)"
