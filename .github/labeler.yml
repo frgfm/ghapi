@@ -10,6 +10,9 @@
 'module: connection':
 - ghapi/connection.py
 
+'module: repos':
+- ghapi/repos.py
+
 'ext: docs':
 - docs/*
 
