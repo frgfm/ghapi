@@ -3,7 +3,7 @@ requires = ["setuptools", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "ghapi_client"
+name = "ghapi-client"
 description = "Python client for the GitHub API"
 authors = [
     {name = "François-Guillaume Fernandez", email = "fg-feedback@protonmail.com"},
@@ -95,7 +95,7 @@ zip-safe = true
 exclude = ["docs*", "tests*"]
 
 [tool.mypy]
-files = "ghapi_client/"
+files = "ghapi/"
 show_error_codes = true
 pretty = true
 warn_unused_ignores = true
@@ -112,7 +112,7 @@ ignore_missing_imports = true
 
 [tool.isort]
 line_length = 120
-src_paths = ["ghapi_client", "tests", "docs"]
+src_paths = ["ghapi", "tests", "docs"]
 skip_glob = "**/__init__.py"
 known_third_party = []
 
@@ -121,7 +121,7 @@ select = "D300,D301,D417"
 match = ".*\\.py"
 
 [tool.coverage.run]
-source = ["ghapi_client"]
+source = ["ghapi"]
 
 [tool.black]
 line-length = 120
