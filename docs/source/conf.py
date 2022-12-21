@@ -20,19 +20,19 @@ import sys
 from datetime import datetime
 
 sys.path.insert(0, os.path.abspath("../.."))
-import ghapi_client
+import ghapi
 
 # -- Project information -----------------------------------------------------
 
 master_doc = "index"
-project = "ghapi_client"
+project = "ghapi"
 author = "François-Guillaume Fernandez"
 _copyright_str = f"-{datetime.now().year}" if datetime.now().year > 2022 else ""
 copyright = f"2022{_copyright_str}, {author}"
 
 # The full version, including alpha/beta/rc tags
-version = ghapi_client.__version__
-release = ghapi_client.__version__ + "-git"
+version = ghapi.__version__
+release = ghapi.__version__ + "-git"
 
 
 # -- General configuration ---------------------------------------------------
