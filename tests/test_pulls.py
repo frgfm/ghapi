@@ -29,28 +29,28 @@ def test_parse_diff_body(diff_body, expected_parsing):
 
 
 @pytest.mark.parametrize(
-    "repo_name, pr_num, payload_len, created_at",
+    "owner, repo, pr_num, payload_len, created_at",
     [
-        ["frgfm/torch-cam", 115, 11, "2021-11-14T16:12:44Z"],
-        ["frgfm/torch-cam", 187, 11, "2022-09-18T17:08:50Z"],
+        ["frgfm", "torch-cam", 115, 11, "2021-11-14T16:12:44Z"],
+        ["frgfm", "torch-cam", 187, 11, "2022-09-18T17:08:50Z"],
     ],
 )
-def test_pull_request_get_info(repo_name, pr_num, payload_len, created_at):
-    pr = PullRequest(repo_name, pr_num)
+def test_pull_request_get_info(owner, repo, pr_num, payload_len, created_at):
+    pr = PullRequest(owner, repo, pr_num)
     out = pr.get_info()
     assert len(out) == payload_len
     assert out["created_at"] == created_at
 
 
 @pytest.mark.parametrize(
-    "repo_name, pr_num, num_files, num_sections",
+    "owner, repo, pr_num, num_files, num_sections",
     [
-        ["frgfm/torch-cam", 115, 1, 1],
-        ["frgfm/torch-cam", 187, 3, 8],
+        ["frgfm", "torch-cam", 115, 1, 1],
+        ["frgfm", "torch-cam", 187, 3, 8],
     ],
 )
-def test_pull_request_get_diff(repo_name, pr_num, num_files, num_sections):
-    pr = PullRequest(repo_name, pr_num)
+def test_pull_request_get_diff(owner, repo, pr_num, num_files, num_sections):
+    pr = PullRequest(owner, repo, pr_num)
     out = pr.get_diff()
     assert len(out) == num_files
     assert sum(len(sections) for sections in out.values()) == num_sections
