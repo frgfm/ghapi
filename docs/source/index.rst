@@ -1,5 +1,5 @@
 *****************************
-ghapi_client
+Python client for GitHub API
 *****************************
 
 Welcome to the documentation of this Python client for the GitHub API |:hugging_face:|
@@ -18,6 +18,7 @@ Welcome to the documentation of this Python client for the GitHub API |:hugging_
    :hidden:
 
    pulls
+   reviews
 
 .. toctree::
    :maxdepth: 1
