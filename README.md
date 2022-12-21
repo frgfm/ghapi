@@ -32,7 +32,7 @@ This project uses [GitHub API](https://docs.github.com/en/rest) to fetch informa
 You can find the exhaustive list of supported features in the [documentation](https://frgfm.github.io/ghapi). For instance, you can retrieve basic information about your pull request as follows:
 
 ```python
-from ghapi_client.pulls import PullRequest
+from ghapi.pulls import PullRequest
 
 pr = PullRequest("frgfm", "torch-cam", 187)
 # Get the PR information

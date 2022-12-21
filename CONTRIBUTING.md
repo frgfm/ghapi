@@ -8,12 +8,9 @@ Whatever the way you wish to contribute to the project, please respect the [code
 
 ## Codebase structure
 
-- [ghapi_client](https://github.com/frgfm/ghapi/blob/main/ghapi_client) - The actual ghapi_client library
-- [tests](https://github.com/frgfm/ghapi/blob/main/tests) - Python unit tests
-- [docs](https://github.com/frgfm/ghapi/blob/main/docs) - Sphinx documentation building
-- [scripts](https://github.com/frgfm/ghapi/blob/main/scripts) - Example and utilities scripts
-- [demo](https://github.com/frgfm/ghapi/blob/main/demo) - Small demo app to showcase ghapi_client capabilities
-
+- [`ghapi`](https://github.com/frgfm/ghapi/blob/main/ghapi) - The actual ghapi library
+- [`tests`](https://github.com/frgfm/ghapi/blob/main/tests) - Python unit tests
+- [`docs`](https://github.com/frgfm/ghapi/blob/main/docs) - Sphinx documentation building
 
 
 ## Continuous Integration
@@ -38,7 +35,7 @@ First, check whether the topic wasn't already covered in an open / closed issue.
 
 ### Questions
 
-If you are wondering how to do something with ghapi_client, or a more general question, you should consider checking out Github [discussions](https://github.com/frgfm/ghapi/discussions). See it as a Q&A forum, or the ghapi_client-specific StackOverflow!
+If you are wondering how to do something with ghapi, or a more general question, you should consider checking out Github [discussions](https://github.com/frgfm/ghapi/discussions). See it as a Q&A forum, or the ghapi-specific StackOverflow!
 
 
 
