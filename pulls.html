@@ -3,7 +3,7 @@
   <head><meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width,initial-scale=1"/>
     <meta name="color-scheme" content="light dark"><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
-<link rel="index" title="Index" href="genindex.html" /><link rel="search" title="Search" href="search.html" /><link rel="next" title="ghapi.reviews" href="reviews.html" /><link rel="prev" title="ghapi.connection" href="connection.html" />
+<link rel="index" title="Index" href="genindex.html" /><link rel="search" title="Search" href="search.html" /><link rel="next" title="ghapi.reviews" href="reviews.html" /><link rel="prev" title="ghapi.repos" href="repos.html" />
 
     <!-- Generated with Sphinx 5.3.0 and Furo 2022.12.07 -->
         <title>ghapi.pulls - ghapi</title>
@@ -163,6 +163,7 @@
 <p class="caption" role="heading"><span class="caption-text">Package Reference</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="connection.html">ghapi.connection</a></li>
+<li class="toctree-l1"><a class="reference internal" href="repos.html">ghapi.repos</a></li>
 <li class="toctree-l1 current current-page"><a class="current reference internal" href="#">ghapi.pulls</a></li>
 <li class="toctree-l1"><a class="reference internal" href="reviews.html">ghapi.reviews</a></li>
 </ul>
@@ -215,10 +216,10 @@
 <h1>ghapi.pulls<a class="headerlink" href="#ghapi-pulls" title="Permalink to this heading">#</a></h1>
 <dl class="py class">
 <dt class="sig sig-object py" id="ghapi.pulls.PullRequest">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">ghapi.pulls.</span></span><span class="sig-name descname"><span class="pre">PullRequest</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">owner</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">repo</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pull_number</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">conn</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="connection.html#ghapi.connection.Connection" title="ghapi.connection.Connection"><span class="pre">Connection</span></a><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ghapi/pulls.html#PullRequest"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ghapi.pulls.PullRequest" title="Permalink to this definition">#</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">ghapi.pulls.</span></span><span class="sig-name descname"><span class="pre">PullRequest</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">repo</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="repos.html#ghapi.repos.Repository" title="ghapi.repos.Repository"><span class="pre">Repository</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">pull_number</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">conn</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="connection.html#ghapi.connection.Connection" title="ghapi.connection.Connection"><span class="pre">Connection</span></a><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ghapi/pulls.html#PullRequest"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ghapi.pulls.PullRequest" title="Permalink to this definition">#</a></dt>
 <dd><p>Implements a Pull Request object</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">ghapi.pulls</span> <span class="kn">import</span> <span class="n">PullRequest</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">pr</span> <span class="o">=</span> <span class="n">PullRequest</span><span class="p">(</span><span class="s2">&quot;frgfm&quot;</span><span class="p">,</span> <span class="s2">&quot;torch-cam&quot;</span><span class="p">,</span> <span class="mi">187</span><span class="p">)</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">ghapi</span> <span class="kn">import</span> <span class="n">Repo</span><span class="p">,</span> <span class="n">PullRequest</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">pr</span> <span class="o">=</span> <span class="n">PullRequest</span><span class="p">(</span><span class="n">Repo</span><span class="p">(</span><span class="s2">&quot;frgfm&quot;</span><span class="p">,</span> <span class="s2">&quot;torch-cam&quot;</span><span class="p">),</span> <span class="mi">187</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">pr</span><span class="o">.</span><span class="n">get_info</span><span class="p">()</span>
 </pre></div>
 </div>
@@ -250,14 +251,14 @@
               </div>
               <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
             </a>
-          <a class="prev-page" href="connection.html">
+          <a class="prev-page" href="repos.html">
               <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
               <div class="page-info">
                 <div class="context">
                   <span>Previous</span>
                 </div>
                 
-                <div class="title">ghapi.connection</div>
+                <div class="title">ghapi.repos</div>
                 
               </div>
             </a>

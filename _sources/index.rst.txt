@@ -18,6 +18,7 @@ Welcome to the documentation of this Python client for the GitHub API |:hugging_
    :hidden:
 
    connection
+   repos
    pulls
    reviews
 

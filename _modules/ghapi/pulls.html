@@ -162,6 +162,7 @@
 <p class="caption" role="heading"><span class="caption-text">Package Reference</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../connection.html">ghapi.connection</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../repos.html">ghapi.repos</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../pulls.html">ghapi.pulls</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../reviews.html">ghapi.reviews</a></li>
 </ul>
@@ -213,6 +214,7 @@
 
 <span class="kn">from</span> <span class="nn">.connection</span> <span class="kn">import</span> <span class="n">Connection</span>
 <span class="kn">from</span> <span class="nn">.exceptions</span> <span class="kn">import</span> <span class="n">HTTPRequestException</span>
+<span class="kn">from</span> <span class="nn">.repos</span> <span class="kn">import</span> <span class="n">Repository</span>
 
 <span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;PullRequest&quot;</span><span class="p">]</span>
 
@@ -238,8 +240,8 @@
 <div class="viewcode-block" id="PullRequest"><a class="viewcode-back" href="../../pulls.html#ghapi.pulls.PullRequest">[docs]</a><span class="k">class</span> <span class="nc">PullRequest</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;Implements a Pull Request object</span>
 
-<span class="sd">    &gt;&gt;&gt; from ghapi.pulls import PullRequest</span>
-<span class="sd">    &gt;&gt;&gt; pr = PullRequest(&quot;frgfm&quot;, &quot;torch-cam&quot;, 187)</span>
+<span class="sd">    &gt;&gt;&gt; from ghapi import Repo, PullRequest</span>
+<span class="sd">    &gt;&gt;&gt; pr = PullRequest(Repo(&quot;frgfm&quot;, &quot;torch-cam&quot;), 187)</span>
 <span class="sd">    &gt;&gt;&gt; pr.get_info()</span>
 
 <span class="sd">    Args:</span>
@@ -251,8 +253,7 @@
 
     <span class="n">ROUTE</span> <span class="o">=</span> <span class="s2">&quot;/repos/</span><span class="si">{owner}</span><span class="s2">/</span><span class="si">{repo}</span><span class="s2">/pulls/</span><span class="si">{pull_number}</span><span class="s2">&quot;</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">owner</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">repo</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">pull_number</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">conn</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Connection</span><span class="p">,</span> <span class="kc">None</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">owner</span> <span class="o">=</span> <span class="n">owner</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">repo</span><span class="p">:</span> <span class="n">Repository</span><span class="p">,</span> <span class="n">pull_number</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">conn</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Connection</span><span class="p">,</span> <span class="kc">None</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">repo</span> <span class="o">=</span> <span class="n">repo</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">pull_number</span> <span class="o">=</span> <span class="n">pull_number</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">conn</span> <span class="o">=</span> <span class="n">conn</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">conn</span><span class="p">,</span> <span class="n">Connection</span><span class="p">)</span> <span class="k">else</span> <span class="n">Connection</span><span class="p">()</span>
@@ -266,7 +267,9 @@
     <span class="k">def</span> <span class="nf">info</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_info</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
             <span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">conn</span><span class="o">.</span><span class="n">resolve</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ROUTE</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">owner</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">owner</span><span class="p">,</span> <span class="n">repo</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">repo</span><span class="p">,</span> <span class="n">pull_number</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">pull_number</span><span class="p">))</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">conn</span><span class="o">.</span><span class="n">resolve</span><span class="p">(</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">ROUTE</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">owner</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">repo</span><span class="o">.</span><span class="n">owner</span><span class="p">,</span> <span class="n">repo</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">repo</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">pull_number</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">pull_number</span><span class="p">)</span>
+                <span class="p">)</span>
             <span class="p">)</span>
             <span class="k">if</span> <span class="n">response</span><span class="o">.</span><span class="n">status_code</span> <span class="o">!=</span> <span class="mi">200</span><span class="p">:</span>
                 <span class="k">raise</span> <span class="n">HTTPRequestException</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">status_code</span><span class="p">,</span> <span class="n">response</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
@@ -299,7 +302,9 @@
     <span class="k">def</span> <span class="nf">diff</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_diff</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
             <span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">conn</span><span class="o">.</span><span class="n">resolve</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ROUTE</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">owner</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">owner</span><span class="p">,</span> <span class="n">repo</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">repo</span><span class="p">,</span> <span class="n">pull_number</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">pull_number</span><span class="p">)),</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">conn</span><span class="o">.</span><span class="n">resolve</span><span class="p">(</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">ROUTE</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">owner</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">repo</span><span class="o">.</span><span class="n">owner</span><span class="p">,</span> <span class="n">repo</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">repo</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">pull_number</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">pull_number</span><span class="p">)</span>
+                <span class="p">),</span>
                 <span class="n">headers</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;Accept&quot;</span><span class="p">:</span> <span class="s2">&quot;application/vnd.github.v4.diff&quot;</span><span class="p">},</span>
             <span class="p">)</span>
             <span class="k">if</span> <span class="n">response</span><span class="o">.</span><span class="n">status_code</span> <span class="o">!=</span> <span class="mi">200</span><span class="p">:</span>

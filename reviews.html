@@ -163,6 +163,7 @@
 <p class="caption" role="heading"><span class="caption-text">Package Reference</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="connection.html">ghapi.connection</a></li>
+<li class="toctree-l1"><a class="reference internal" href="repos.html">ghapi.repos</a></li>
 <li class="toctree-l1"><a class="reference internal" href="pulls.html">ghapi.pulls</a></li>
 <li class="toctree-l1 current current-page"><a class="current reference internal" href="#">ghapi.reviews</a></li>
 </ul>
@@ -217,8 +218,8 @@
 <dt class="sig sig-object py" id="ghapi.reviews.Review">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">ghapi.reviews.</span></span><span class="sig-name descname"><span class="pre">Review</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pr</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="pulls.html#ghapi.pulls.PullRequest" title="ghapi.pulls.PullRequest"><span class="pre">PullRequest</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ghapi/reviews.html#Review"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ghapi.reviews.Review" title="Permalink to this definition">#</a></dt>
 <dd><p>Implements a Review object</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">ghapi.pulls</span> <span class="kn">import</span> <span class="n">PullRequest</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">pr</span> <span class="o">=</span> <span class="n">PullRequest</span><span class="p">(</span><span class="s2">&quot;frgfm&quot;</span><span class="p">,</span> <span class="s2">&quot;torch-cam&quot;</span><span class="p">,</span> <span class="mi">187</span><span class="p">)</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">ghapi</span> <span class="kn">import</span> <span class="n">Repo</span><span class="p">,</span> <span class="n">PullRequest</span><span class="p">,</span> <span class="n">Review</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">pr</span> <span class="o">=</span> <span class="n">PullRequest</span><span class="p">(</span><span class="n">Repo</span><span class="p">(</span><span class="s2">&quot;frgfm&quot;</span><span class="p">,</span> <span class="s2">&quot;torch-cam&quot;</span><span class="p">),</span> <span class="mi">187</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">ghapi.reviews</span> <span class="kn">import</span> <span class="n">Review</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">pr</span><span class="o">.</span><span class="n">conn</span><span class="o">.</span><span class="n">set_token</span><span class="p">(</span><span class="s2">&quot;MY_DUMMY_TOKEN&quot;</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">review</span> <span class="o">=</span> <span class="n">Review</span><span class="p">(</span><span class="n">pr</span><span class="p">,</span> <span class="n">conn</span><span class="p">)</span>
