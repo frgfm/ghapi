@@ -213,18 +213,19 @@
 <h1>ghapi_client.pulls<a class="headerlink" href="#ghapi-client-pulls" title="Permalink to this heading">#</a></h1>
 <dl class="py class">
 <dt class="sig sig-object py" id="ghapi_client.pulls.PullRequest">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">ghapi_client.pulls.</span></span><span class="sig-name descname"><span class="pre">PullRequest</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">repo_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pr_num</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ghapi_client/pulls.html#PullRequest"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ghapi_client.pulls.PullRequest" title="Permalink to this definition">#</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">ghapi_client.pulls.</span></span><span class="sig-name descname"><span class="pre">PullRequest</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">owner</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">repo</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pull_number</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ghapi_client/pulls.html#PullRequest"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ghapi_client.pulls.PullRequest" title="Permalink to this definition">#</a></dt>
 <dd><p>Implements a Pull Request object</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">ghapi_client.pulls</span> <span class="kn">import</span> <span class="n">PullRequest</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">pr</span> <span class="o">=</span> <span class="n">PullRequest</span><span class="p">(</span><span class="s2">&quot;frgfm/torch-cam&quot;</span><span class="p">,</span> <span class="mi">187</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">pr</span> <span class="o">=</span> <span class="n">PullRequest</span><span class="p">(</span><span class="s2">&quot;frgfm&quot;</span><span class="p">,</span> <span class="s2">&quot;torch-cam&quot;</span><span class="p">,</span> <span class="mi">187</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">pr</span><span class="o">.</span><span class="n">get_info</span><span class="p">()</span>
 </pre></div>
 </div>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>repo_name</strong> – the full repository name</p></li>
-<li><p><strong>pr_num</strong> – the PR number</p></li>
+<li><p><strong>owner</strong> – GitHub login of the repository’s owner</p></li>
+<li><p><strong>repo</strong> – name of the repository</p></li>
+<li><p><strong>pull_number</strong> – the PR number</p></li>
 </ul>
 </dd>
 </dl>
