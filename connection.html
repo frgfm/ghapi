@@ -3,10 +3,10 @@
   <head><meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width,initial-scale=1"/>
     <meta name="color-scheme" content="light dark"><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
-<link rel="index" title="Index" href="genindex.html" /><link rel="search" title="Search" href="search.html" /><link rel="next" title="Installation" href="installing.html" />
+<link rel="index" title="Index" href="genindex.html" /><link rel="search" title="Search" href="search.html" /><link rel="next" title="ghapi_client.pulls" href="pulls.html" /><link rel="prev" title="Installation" href="installing.html" />
 
     <!-- Generated with Sphinx 5.3.0 and Furo 2022.12.07 -->
-        <title>ghapi_client</title>
+        <title>ghapi_client.connection - ghapi_client</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
     <link rel="stylesheet" type="text/css" href="_static/styles/furo.css?digest=91d0f0d1c444bdcb17a68e833c7a53903343c195" />
     <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
@@ -125,7 +125,7 @@
       </label>
     </div>
     <div class="header-center">
-      <a href="#"><div class="brand">ghapi_client</div></a>
+      <a href="index.html"><div class="brand">ghapi_client</div></a>
     </div>
     <div class="header-right">
       <div class="theme-toggle-container theme-toggle-header">
@@ -145,7 +145,7 @@
   <aside class="sidebar-drawer">
     <div class="sidebar-container">
       
-      <div class="sidebar-sticky"><a class="sidebar-brand" href="#">
+      <div class="sidebar-sticky"><a class="sidebar-brand" href="index.html">
   
   
   <span class="sidebar-brand-text">ghapi_client</span>
@@ -161,8 +161,8 @@
 <li class="toctree-l1"><a class="reference internal" href="installing.html">Installation</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Package Reference</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="connection.html">ghapi_client.connection</a></li>
+<ul class="current">
+<li class="toctree-l1 current current-page"><a class="current reference internal" href="#">ghapi_client.connection</a></li>
 <li class="toctree-l1"><a class="reference internal" href="pulls.html">ghapi_client.pulls</a></li>
 <li class="toctree-l1"><a class="reference internal" href="reviews.html">ghapi_client.reviews</a></li>
 </ul>
@@ -189,7 +189,7 @@
         </a>
         <div class="content-icon-container">
           <div class="edit-this-page">
-  <a class="muted-link" href="https://github.com/frgfm/ghapi/edit/main/docs/source/index.rst" title="Edit this page">
+  <a class="muted-link" href="https://github.com/frgfm/ghapi/edit/main/docs/source/connection.rst" title="Edit this page">
     <svg aria-hidden="true" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
       <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
       <path d="M4 20h4l10.5 -10.5a1.5 1.5 0 0 0 -4 -4l-10.5 10.5v4" />
@@ -211,15 +211,26 @@
           </label>
         </div>
         <article role="main">
-          <section id="python-client-for-github-api">
-<h1>Python client for GitHub API<a class="headerlink" href="#python-client-for-github-api" title="Permalink to this heading">#</a></h1>
-<p>Welcome to the documentation of this Python client for the GitHub API 🤗</p>
-<div class="toctree-wrapper compound">
+          <section id="ghapi-client-connection">
+<h1>ghapi_client.connection<a class="headerlink" href="#ghapi-client-connection" title="Permalink to this heading">#</a></h1>
+<dl class="py class">
+<dt class="sig sig-object py" id="ghapi_client.connection.Connection">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">ghapi_client.connection.</span></span><span class="sig-name descname"><span class="pre">Connection</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">token</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">url</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'https://api.github.com'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ghapi_client/connection.html#Connection"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ghapi_client.connection.Connection" title="Permalink to this definition">#</a></dt>
+<dd><p>Implements a GH API Connection object</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">ghapi_client.connection</span> <span class="kn">import</span> <span class="n">Connection</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">con</span> <span class="o">=</span> <span class="n">Connection</span><span class="p">(</span><span class="s2">&quot;DUMMY_TOKEN&quot;</span><span class="p">)</span>
+</pre></div>
 </div>
-<div class="toctree-wrapper compound">
-</div>
-<div class="toctree-wrapper compound">
-</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>token</strong> – your GitHub token (cf. <a class="reference external" href="https://github.com/settings/tokens">https://github.com/settings/tokens</a>)</p></li>
+<li><p><strong>url</strong> – URL to the Github API</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
 </section>
 
         </article>
@@ -227,16 +238,26 @@
       <footer>
         
         <div class="related-pages">
-          <a class="next-page" href="installing.html">
+          <a class="next-page" href="pulls.html">
               <div class="page-info">
                 <div class="context">
                   <span>Next</span>
                 </div>
-                <div class="title">Installation</div>
+                <div class="title">ghapi_client.pulls</div>
               </div>
               <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
             </a>
-          
+          <a class="prev-page" href="installing.html">
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+              <div class="page-info">
+                <div class="context">
+                  <span>Previous</span>
+                </div>
+                
+                <div class="title">Installation</div>
+                
+              </div>
+            </a>
         </div>
         <div class="bottom-of-page">
           <div class="left-details">
@@ -274,7 +295,8 @@
         <div class="toc-tree-container">
           <div class="toc-tree">
             <ul>
-<li><a class="reference internal" href="#">Python client for GitHub API</a><ul>
+<li><a class="reference internal" href="#">ghapi_client.connection</a><ul>
+<li><a class="reference internal" href="#ghapi_client.connection.Connection"><code class="docutils literal notranslate"><span class="pre">Connection</span></code></a></li>
 </ul>
 </li>
 </ul>
