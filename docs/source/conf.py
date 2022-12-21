@@ -75,7 +75,7 @@ highlight_language = "python3"
 #
 html_theme = "furo"
 
-html_title = "ghapi_client"
+html_title = "ghapi"
 # html_logo = "_static/images/logo.png"
 # html_favicon = "_static/images/favicon.ico"
 language = "en"
