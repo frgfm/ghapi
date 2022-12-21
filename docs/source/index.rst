@@ -17,6 +17,7 @@ Welcome to the documentation of this Python client for the GitHub API |:hugging_
    :caption: Package Reference
    :hidden:
 
+   connection
    pulls
    reviews
 
