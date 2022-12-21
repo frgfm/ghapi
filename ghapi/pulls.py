@@ -58,10 +58,6 @@ class PullRequest:
         self._info: Union[Dict[str, Any], None] = None
         self._diff: Union[str, None] = None
 
-    def __repr__(self) -> str:
-        class_name = self.__class__.__name__
-        return f"{class_name}(repo_owner='{self.owner}', repo_name='{self.name}', pull_number={self.pull_number})"
-
     @property
     def info(self) -> Dict[str, Any]:
         if not isinstance(self._info, dict):
