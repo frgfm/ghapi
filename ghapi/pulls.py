@@ -9,6 +9,7 @@ import requests
 
 from .connection import Connection
 from .exceptions import HTTPRequestException
+from .repos import Repository
 
 __all__ = ["PullRequest"]
 
@@ -34,8 +35,8 @@ def parse_diff_body(diff_body: str) -> Dict[str, List[Tuple[str, str]]]:
 class PullRequest:
     """Implements a Pull Request object
 
-    >>> from ghapi.pulls import PullRequest
-    >>> pr = PullRequest("frgfm", "torch-cam", 187)
+    >>> from ghapi import Repo, PullRequest
+    >>> pr = PullRequest(Repo("frgfm", "torch-cam"), 187)
     >>> pr.get_info()
 
     Args:
@@ -47,8 +48,7 @@ class PullRequest:
 
     ROUTE = "/repos/{owner}/{repo}/pulls/{pull_number}"
 
-    def __init__(self, owner: str, repo: str, pull_number: int, conn: Union[Connection, None] = None) -> None:
-        self.owner = owner
+    def __init__(self, repo: Repository, pull_number: int, conn: Union[Connection, None] = None) -> None:
         self.repo = repo
         self.pull_number = pull_number
         self.conn = conn if isinstance(conn, Connection) else Connection()
@@ -62,7 +62,9 @@ class PullRequest:
     def info(self) -> Dict[str, Any]:
         if not isinstance(self._info, dict):
             response = requests.get(
-                self.conn.resolve(self.ROUTE.format(owner=self.owner, repo=self.repo, pull_number=self.pull_number))
+                self.conn.resolve(
+                    self.ROUTE.format(owner=self.repo.owner, repo=self.repo.name, pull_number=self.pull_number)
+                )
             )
             if response.status_code != 200:
                 raise HTTPRequestException(response.status_code, response.text)
@@ -95,7 +97,9 @@ class PullRequest:
     def diff(self) -> str:
         if not isinstance(self._diff, str):
             response = requests.get(
-                self.conn.resolve(self.ROUTE.format(owner=self.owner, repo=self.repo, pull_number=self.pull_number)),
+                self.conn.resolve(
+                    self.ROUTE.format(owner=self.repo.owner, repo=self.repo.name, pull_number=self.pull_number)
+                ),
                 headers={"Accept": "application/vnd.github.v4.diff"},
             )
             if response.status_code != 200:

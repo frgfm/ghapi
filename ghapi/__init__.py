@@ -1,4 +1,5 @@
 from .connection import *
+from .repos import *
 from .pulls import *
 from .reviews import *
 

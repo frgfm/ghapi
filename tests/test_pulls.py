@@ -1,6 +1,7 @@
 import pytest
 
 from ghapi.pulls import PullRequest, parse_diff_body
+from ghapi.repos import Repository
 
 
 @pytest.mark.parametrize(
@@ -36,7 +37,7 @@ def test_parse_diff_body(diff_body, expected_parsing):
     ],
 )
 def test_pull_request_get_info(owner, repo, pr_num, payload_len, created_at):
-    pr = PullRequest(owner, repo, pr_num)
+    pr = PullRequest(Repository(owner, repo), pr_num)
     out = pr.get_info()
     assert len(out) == payload_len
     assert out["created_at"] == created_at
@@ -50,7 +51,7 @@ def test_pull_request_get_info(owner, repo, pr_num, payload_len, created_at):
     ],
 )
 def test_pull_request_get_diff(owner, repo, pr_num, num_files, num_sections):
-    pr = PullRequest(owner, repo, pr_num)
+    pr = PullRequest(Repository(owner, repo), pr_num)
     out = pr.get_diff()
     assert len(out) == num_files
     assert sum(len(sections) for sections in out.values()) == num_sections
