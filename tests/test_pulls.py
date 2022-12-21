@@ -1,6 +1,6 @@
 import pytest
 
-from ghapi_client.pulls import PullRequest, parse_diff_body
+from ghapi.pulls import PullRequest, parse_diff_body
 
 
 @pytest.mark.parametrize(
