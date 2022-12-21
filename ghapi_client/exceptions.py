@@ -5,6 +5,8 @@
 
 from typing import Union
 
+__all__ = ["HTTPRequestException"]
+
 
 class HTTPRequestException(Exception):
     def __init__(self, status_code: int, response_message: Union[str, None] = None) -> None:

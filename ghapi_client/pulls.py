@@ -7,11 +7,10 @@ from typing import Any, Dict, List, Tuple, Union
 
 import requests
 
+from .connection import Connection
 from .exceptions import HTTPRequestException
 
 __all__ = ["PullRequest"]
-
-ROUTE_URL = "https://api.github.com/repos/{owner}/{repo}/pulls/{pull_number}"
 
 
 def parse_diff_body(diff_body: str) -> Dict[str, List[Tuple[str, str]]]:
@@ -43,12 +42,16 @@ class PullRequest:
         owner: GitHub login of the repository's owner
         repo: name of the repository
         pull_number: the PR number
+        conn: connection object
     """
 
-    def __init__(self, owner: str, repo: str, pull_number: int) -> None:
+    ROUTE = "/repos/{owner}/{repo}/pulls/{pull_number}"
+
+    def __init__(self, owner: str, repo: str, pull_number: int, conn: Union[Connection, None] = None) -> None:
         self.owner = owner
         self.repo = repo
         self.pull_number = pull_number
+        self.conn = conn if isinstance(conn, Connection) else Connection()
         self.reset()
 
     def reset(self) -> None:
@@ -58,7 +61,9 @@ class PullRequest:
     @property
     def info(self) -> Dict[str, Any]:
         if not isinstance(self._info, dict):
-            response = requests.get(ROUTE_URL.format(owner=self.owner, repo=self.repo, pull_number=self.pull_number))
+            response = requests.get(
+                self.conn.resolve(self.ROUTE.format(owner=self.owner, repo=self.repo, pull_number=self.pull_number))
+            )
             if response.status_code != 200:
                 raise HTTPRequestException(response.status_code, response.text)
 
@@ -90,7 +95,7 @@ class PullRequest:
     def diff(self) -> str:
         if not isinstance(self._diff, str):
             response = requests.get(
-                ROUTE_URL.format(owner=self.owner, repo=self.repo, pull_number=self.pull_number),
+                self.conn.resolve(self.ROUTE.format(owner=self.owner, repo=self.repo, pull_number=self.pull_number)),
                 headers={"Accept": "application/vnd.github.v4.diff"},
             )
             if response.status_code != 200:

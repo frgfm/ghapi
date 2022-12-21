@@ -7,6 +7,9 @@
 'module: exceptions':
 - ghapi_client/exceptions.py
 
+'module: connection':
+- ghapi_client/connection.py
+
 'ext: docs':
 - docs/*
 
