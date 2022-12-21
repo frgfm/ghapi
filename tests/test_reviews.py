@@ -2,6 +2,7 @@ import pytest
 
 from ghapi.exceptions import HTTPRequestException
 from ghapi.pulls import PullRequest
+from ghapi.repos import Repository
 from ghapi.reviews import Review
 
 
@@ -22,7 +23,7 @@ from ghapi.reviews import Review
     ],
 )
 def test_review_stage_comment(owner, repo, pull_number, path, body, line, kwargs, expected_comment):
-    pr = PullRequest(owner, repo, pull_number)
+    pr = PullRequest(Repository(owner, repo), pull_number)
     pr.conn.set_token("DUMMY_TOKEN")
     review = Review(pr)
     assert len(review.pending_comments) == 0
@@ -38,7 +39,7 @@ def test_review_stage_comment(owner, repo, pull_number, path, body, line, kwargs
     ],
 )
 def test_review_submit(owner, repo, pull_number, path, body, line, kwargs, expected_comment):
-    pr = PullRequest(owner, repo, pull_number)
+    pr = PullRequest(Repository(owner, repo), pull_number)
     pr.conn.set_token("DUMMY_TOKEN")
     review = Review(pr)
     review.stage_comment(path, body, line, **kwargs)
