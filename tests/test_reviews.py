@@ -6,11 +6,12 @@ from ghapi_client.reviews import Review
 
 
 @pytest.mark.parametrize(
-    "repo_name, pull_number, path, body, line, kwargs, expected_comment",
+    "owner, repo, pull_number, path, body, line, kwargs, expected_comment",
     [
-        ["owner/repo", 2, "README.md", "Weird", 1, {}, {"path": "README.md", "body": "Weird", "line": 1}],
+        ["owner", "repo", 2, "README.md", "Weird", 1, {}, {"path": "README.md", "body": "Weird", "line": 1}],
         [
-            "owner/repo",
+            "owner",
+            "repo",
             2,
             "README.md",
             "Weird",
@@ -20,8 +21,8 @@ from ghapi_client.reviews import Review
         ],
     ],
 )
-def test_review_stage_comment(repo_name, pull_number, path, body, line, kwargs, expected_comment):
-    pr = PullRequest(repo_name, pull_number)
+def test_review_stage_comment(owner, repo, pull_number, path, body, line, kwargs, expected_comment):
+    pr = PullRequest(owner, repo, pull_number)
     review = Review(pr, "DUMMY_TOKEN")
     assert len(review.pending_comments) == 0
     review.stage_comment(path, body, line, **kwargs)
@@ -30,13 +31,13 @@ def test_review_stage_comment(repo_name, pull_number, path, body, line, kwargs, 
 
 
 @pytest.mark.parametrize(
-    "repo_name, pull_number, path, body, line, kwargs, expected_comment",
+    "owner, repo, pull_number, path, body, line, kwargs, expected_comment",
     [
-        ["owner/repo", 2, "README.md", "Weird", 1, {}, {"path": "README.md", "body": "Weird", "line": 1}],
+        ["owner", "repo", 2, "README.md", "Weird", 1, {}, {"path": "README.md", "body": "Weird", "line": 1}],
     ],
 )
-def test_review_submit(repo_name, pull_number, path, body, line, kwargs, expected_comment):
-    pr = PullRequest(repo_name, pull_number)
+def test_review_submit(owner, repo, pull_number, path, body, line, kwargs, expected_comment):
+    pr = PullRequest(owner, repo, pull_number)
     review = Review(pr, "DUMMY_TOKEN")
     review.stage_comment(path, body, line, **kwargs)
 
