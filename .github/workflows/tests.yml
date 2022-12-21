@@ -68,4 +68,4 @@ jobs:
           owner: 'François-Guillaume Fernandez'
           starting-year: 2022
           folders: 'ghapi_client,docs,.github'
-          ignores: 'version.py,__init__.py'
+          ignore-files: 'version.py,__init__.py'

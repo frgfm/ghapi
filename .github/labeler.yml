@@ -10,8 +10,14 @@
 'ext: tests':
 - tests/*
 
+'topic: build':
+- setup.py
+- pyproject.toml
+
 'topic: ci':
 - .github/*
 
-'topic: build':
-- setup.py
+'topic: documentation':
+- README.md
+- CONTRIBUTING.md
+- CODE_OF_CONDUCT.md
