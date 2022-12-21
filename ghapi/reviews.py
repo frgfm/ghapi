@@ -24,7 +24,7 @@ class Review:
     r"""Implements a Review object
 
     >>> from ghapi.pulls import PullRequest
-    >>> pr = PullRequest("frgfm/torch-cam", 187)
+    >>> pr = PullRequest("frgfm", "torch-cam", 187)
     >>> from ghapi.reviews import Review
     >>> pr.conn.set_token("MY_DUMMY_TOKEN")
     >>> review = Review(pr, conn)
