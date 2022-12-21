@@ -13,10 +13,6 @@ from .pulls import PullRequest
 
 __all__ = ["Review"]
 
-ROUTES: Dict[str, str] = {
-    "create": "https://api.github.com/repos/{owner}/{repo}/pulls/{pull_number}/reviews",
-}
-
 
 class ReviewAction(str, Enum):
     APPROVE = "APPROVE"
@@ -30,18 +26,24 @@ class Review:
     >>> from ghapi_client.pulls import PullRequest
     >>> pr = PullRequest("frgfm/torch-cam", 187)
     >>> from ghapi_client.reviews import Review
-    >>> review = Review(pr, token="MY_SECRET_TOKEN")
+    >>> pr.conn.set_token("MY_DUMMY_TOKEN")
+    >>> review = Review(pr, conn)
     >>> review.add_comment("README.md", "This is weird!", 9)
     >>> review.submit("Thanks for the PR!\nI left a few comments!")
 
     Args:
         pr: a pull request object
-        token: your GitHub token (cf. https://github.com/settings/tokens)
     """
 
-    def __init__(self, pr: PullRequest, token: str) -> None:
+    ROUTES: Dict[str, str] = {
+        "create": "/repos/{owner}/{repo}/pulls/{pull_number}/reviews",
+    }
+
+    def __init__(self, pr: PullRequest) -> None:
         self.pr = pr
-        self.token = token
+        self.conn = pr.conn
+        # Check that the connection is valid
+        isinstance(self.conn.token, str)
         # Create the pending review
         self.pending_comments: List[Dict[str, Any]] = []
 
@@ -65,18 +67,16 @@ class Review:
             action: the review action you want to perform.
         """
         response = requests.post(
-            ROUTES["create"].format(owner=self.pr.owner, repo=self.pr.repo, pull_number=self.pr.pull_number),
+            self.conn.resolve(
+                self.ROUTES["create"].format(owner=self.pr.owner, repo=self.pr.repo, pull_number=self.pr.pull_number)
+            ),
             json={
                 "body": body,
                 "event": action,
                 "comments": self.pending_comments,
             },
-            headers=self._headers,
+            headers=self.conn.authorization,
         )
         if response.status_code != 200:
             raise HTTPRequestException(response.status_code, response.text)
         self.response = response.json()
-
-    @property
-    def _headers(self) -> Dict[str, str]:
-        return {"Authorization": f"Bearer {self.token}"}

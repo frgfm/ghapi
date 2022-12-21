@@ -1,3 +1,4 @@
+from .connection import *
 from .pulls import *
 from .reviews import *
 
