@@ -46,6 +46,7 @@ quality = [
     "black>=22.1,<23.0",
     "autoflake>=1.5.0,<2.0.0",
     "bandit[toml]>=1.7.0,<1.8.0",
+    "pre-commit>=2.17.0,<3.0.0",
 ]
 docs = [
     "sphinx>=3.0.0,!=3.5.0",
@@ -70,6 +71,7 @@ dev = [
     "black>=22.1,<23.0",
     "autoflake>=1.5.0,<2.0.0",
     "bandit[toml]>=1.7.0,<1.8.0",
+    "pre-commit>=2.17.0,<3.0.0",
     # docs
     "sphinx<=3.4.3",
     "sphinx-rtd-theme==0.4.3",
