@@ -23,11 +23,10 @@ class ReviewAction(str, Enum):
 class Review:
     r"""Implements a Review object
 
-    >>> from ghapi import Repo, PullRequest, Review
-    >>> pr = PullRequest(Repo("frgfm", "torch-cam"), 187)
-    >>> from ghapi.reviews import Review
+    >>> from ghapi import Repository, PullRequest, Review
+    >>> pr = PullRequest(Repository("frgfm", "torch-cam"), 187)
     >>> pr.conn.set_token("MY_DUMMY_TOKEN")
-    >>> review = Review(pr, conn)
+    >>> review = Review(pr)
     >>> review.stage_comment("README.md", "This is weird!", 9)
     >>> review.submit("Thanks for the PR!\nI left a few comments!")
 
