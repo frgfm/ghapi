@@ -23,6 +23,7 @@ class Repository:
     Args:
         owner: GitHub login of the repository's owner
         name: name of the repository
+        conn: connection object
     """
 
     ROUTES: Dict[str, str] = {

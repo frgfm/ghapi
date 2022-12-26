@@ -4,10 +4,11 @@
 # See LICENSE or go to <https://www.apache.org/licenses/LICENSE-2.0> for full license details.
 
 from enum import Enum
-from typing import Any, Dict, List
+from typing import Any, Dict, List, Union
 
 import requests
 
+from .connection import Connection
 from .exceptions import HTTPRequestException
 from .pulls import PullRequest
 
@@ -23,26 +24,26 @@ class ReviewAction(str, Enum):
 class Review:
     r"""Implements a Review object
 
-    >>> from ghapi import Repo, PullRequest, Review
-    >>> pr = PullRequest(Repo("frgfm", "torch-cam"), 187)
-    >>> from ghapi.reviews import Review
+    >>> from ghapi import Repository, PullRequest, Review
+    >>> pr = PullRequest(Repository("frgfm", "torch-cam"), 187)
     >>> pr.conn.set_token("MY_DUMMY_TOKEN")
-    >>> review = Review(pr, conn)
+    >>> review = Review(pr)
     >>> review.stage_comment("README.md", "This is weird!", 9)
     >>> review.submit("Thanks for the PR!\nI left a few comments!")
 
     Args:
         pr: a pull request object
+        conn: connection object
     """
 
     ROUTES: Dict[str, str] = {
         "create": "/repos/{owner}/{repo}/pulls/{pull_number}/reviews",
     }
 
-    def __init__(self, pr: PullRequest) -> None:
+    def __init__(self, pr: PullRequest, conn: Union[Connection, None] = None) -> None:
         self.pr = pr
-        self.conn = pr.conn
-        # Check that the connection is valid
+        self.conn = conn if isinstance(conn, Connection) else pr.conn
+        # Check that the connection is valid (accessing the token property will check that itself)
         isinstance(self.conn.token, str)
         # Create the pending review
         self.pending_comments: List[Dict[str, Any]] = []
