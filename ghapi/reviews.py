@@ -28,7 +28,7 @@ class Review:
     >>> from ghapi.reviews import Review
     >>> pr.conn.set_token("MY_DUMMY_TOKEN")
     >>> review = Review(pr, conn)
-    >>> review.add_comment("README.md", "This is weird!", 9)
+    >>> review.stage_comment("README.md", "This is weird!", 9)
     >>> review.submit("Thanks for the PR!\nI left a few comments!")
 
     Args:

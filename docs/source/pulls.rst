@@ -7,6 +7,6 @@ ghapi.pulls
 
 .. autoclass:: PullRequest
 
-    .. automethod:: resolve
-    .. automethod:: set_token
-    .. automethod:: authorization
+    .. automethod:: get_info
+
+    .. automethod:: get_diff
