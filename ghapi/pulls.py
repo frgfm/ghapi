@@ -35,8 +35,8 @@ def parse_diff_body(diff_body: str) -> Dict[str, List[Tuple[str, str]]]:
 class PullRequest:
     """Implements a Pull Request object
 
-    >>> from ghapi import Repo, PullRequest
-    >>> pr = PullRequest(Repo("frgfm", "torch-cam"), 187)
+    >>> from ghapi import Repository, PullRequest
+    >>> pr = PullRequest(Repository("frgfm", "torch-cam"), 187)
     >>> pr.get_info()
 
     Args:

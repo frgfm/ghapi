@@ -60,5 +60,7 @@ class Repository:
 
         Args:
             kwargs: query parameters of `GitHub API <https://docs.github.com/en/rest/pulls/pulls#list-pull-requests>`_
+        Returns:
+            list of pull request numbers
         """
         return [pull["number"] for pull in self._list_pulls(**kwargs)]
