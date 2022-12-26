@@ -99,7 +99,7 @@ print("\n".join(full_diff["torchcam/methods/gradient.py"][0]))
 
 ## Setup
 
-Python 3.6 (or higher) and [pip](https://pip.pypa.io/en/stable/)/[conda](https://docs.conda.io/en/latest/miniconda.html) are required to install ghapi_client.
+Python 3.6 (or higher) and [pip](https://pip.pypa.io/en/stable/)/[conda](https://docs.conda.io/en/latest/miniconda.html) are required to install `ghapi`.
 
 ### Developer installation
 
@@ -119,7 +119,7 @@ The full package documentation is available [here](https://frgfm.github.io/ghapi
 
 ## Contributing
 
-Feeling like extending the range of possibilities of CAM? Or perhaps submitting a paper implementation? Any sort of contribution is greatly appreciated!
+Feeling like extending the range of supported API feature? Or perhaps submitting a new feature idea? Any sort of contribution is greatly appreciated!
 
 You can find a short guide in [`CONTRIBUTING`](CONTRIBUTING.md) to help grow this project!
 
