@@ -4,10 +4,11 @@
 # See LICENSE or go to <https://www.apache.org/licenses/LICENSE-2.0> for full license details.
 
 from enum import Enum
-from typing import Any, Dict, List
+from typing import Any, Dict, List, Union
 
 import requests
 
+from .connection import Connection
 from .exceptions import HTTPRequestException
 from .pulls import PullRequest
 
