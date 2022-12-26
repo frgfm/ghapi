@@ -16,10 +16,17 @@
   <a href="https://github.com/PyCQA/bandit">
     <img src="https://img.shields.io/badge/security-bandit-yellow.svg?style=flat-square" alt="bandit">
   </a>
+  <a href="https://www.codacy.com/gh/frgfm/ghapi/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=frgfm/ghapi&amp;utm_campaign=Badge_Grade"><img src="https://app.codacy.com/project/badge/Grade/c332510e1ed24026a9479edf1199d2e2"/></a>
 </p>
 <p align="center">
-  <img alt="GitHub release (latest by date)" src="https://img.shields.io/github/v/release/frgfm/ghapi">
-  <img alt="GitHub" src="https://img.shields.io/github/license/frgfm/ghapi">
+  <a href="https://pypi.org/project/ghapi-client/">
+    <img src="https://img.shields.io/pypi/v/ghapi-client.svg?logo=python&logoColor=fff&style=flat-square" alt="PyPi Status">
+  </a>
+  <a href="https://anaconda.org/frgfm/ghapi-client">
+    <img alt="Anaconda" src="https://img.shields.io/conda/vn/frgfm/ghapi-client?style=flat-square?style=flat-square&logo=Anaconda&logoColor=white&label=conda">
+  </a>
+  <img src="https://img.shields.io/pypi/pyversions/ghapi-client.svg?style=flat-square" alt="pyversions">
+  <img src="https://img.shields.io/pypi/l/ghapi-client.svg?style=flat-square" alt="license">
 </p>
 
 
