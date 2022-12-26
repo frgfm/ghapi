@@ -1,0 +1,49 @@
+# https://docs.conda.io/projects/conda-build/en/latest/resources/define-metadata.html#loading-data-from-other-files
+# https://github.com/conda/conda-build/pull/4480
+# for conda-build > 3.21.9
+# {% set pyproject = load_file_data('../pyproject.toml', from_recipe_dir=True) %}
+# {% set project = pyproject.get('project') %}
+# {% set urls = pyproject.get('project', {}).get('urls') %}
+{% set name = "ghapi-client" %}
+
+package:
+  name: {{ name|lower }}
+  version: "{{ environ.get('BUILD_VERSION') }}"
+
+source:
+  fn: {{ name }}-{{ environ.get('BUILD_VERSION') }}.tar.gz
+  url: ../dist/{{ name }}-{{ environ.get('BUILD_VERSION') }}.tar.gz
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} setup.py install --single-version-externally-managed --record=record.txt
+
+requirements:
+  host:
+    - python
+    - pip
+    - setuptools
+    - wheel
+  run:
+    - python >=3.6,<4.0
+    - requests >=2.24.0,<3.0.0
+
+test:
+  imports:
+    - ghapi
+  requires:
+    - pip
+  commands:
+    - pip check
+
+about:
+  home: https://github.com/frgfm/ghapi
+  license: Apache-2.0
+  license_family: Apache
+  license_file: LICENSE
+  summary: 'Python client for the GitHub API'
+  # description: |
+  #   {{ data['long_description'] | replace("\n", "\n    ") | replace("#", '\#')}}
+  doc_url: https://frgfm.github.io/ghapi
+  dev_url: https://github.com/frgfm/ghapi

@@ -128,3 +128,5 @@ dmypy.json
 # Pyre type checker
 .pyre/
 ghapi/version.py
+conda-dist/
+dist/
