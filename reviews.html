@@ -223,7 +223,7 @@
 <span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">ghapi.reviews</span> <span class="kn">import</span> <span class="n">Review</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">pr</span><span class="o">.</span><span class="n">conn</span><span class="o">.</span><span class="n">set_token</span><span class="p">(</span><span class="s2">&quot;MY_DUMMY_TOKEN&quot;</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">review</span> <span class="o">=</span> <span class="n">Review</span><span class="p">(</span><span class="n">pr</span><span class="p">,</span> <span class="n">conn</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">review</span><span class="o">.</span><span class="n">add_comment</span><span class="p">(</span><span class="s2">&quot;README.md&quot;</span><span class="p">,</span> <span class="s2">&quot;This is weird!&quot;</span><span class="p">,</span> <span class="mi">9</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">review</span><span class="o">.</span><span class="n">stage_comment</span><span class="p">(</span><span class="s2">&quot;README.md&quot;</span><span class="p">,</span> <span class="s2">&quot;This is weird!&quot;</span><span class="p">,</span> <span class="mi">9</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">review</span><span class="o">.</span><span class="n">submit</span><span class="p">(</span><span class="s2">&quot;Thanks for the PR!</span><span class="se">\n</span><span class="s2">I left a few comments!&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -232,6 +232,23 @@
 <dd class="field-odd"><p><strong>pr</strong> – a pull request object</p>
 </dd>
 </dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="ghapi.reviews.Review.stage_comment">
+<span class="sig-name descname"><span class="pre">stage_comment</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">body</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">line</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/ghapi/reviews.html#Review.stage_comment"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ghapi.reviews.Review.stage_comment" title="Permalink to this definition">#</a></dt>
+<dd><p>Stage a comment for the review</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>path</strong> – the relative path to the file that necessitates a comment.</p></li>
+<li><p><strong>body</strong> – the text of the review comment.</p></li>
+<li><p><strong>line</strong> – the line of the blob in the pull request diff that the comment applies to. For a multi-line comment,
+the last line of the range that your comment applies to.</p></li>
+<li><p><strong>kwargs</strong> – keyword arguments for comment creation</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
 <dl class="py method">
 <dt class="sig sig-object py" id="ghapi.reviews.Review.submit">
 <span class="sig-name descname"><span class="pre">submit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">body</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">action</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ReviewAction</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">ReviewAction.COMMENT</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/ghapi/reviews.html#Review.submit"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ghapi.reviews.Review.submit" title="Permalink to this definition">#</a></dt>
@@ -314,6 +331,7 @@
             <ul>
 <li><a class="reference internal" href="#">ghapi.reviews</a><ul>
 <li><a class="reference internal" href="#ghapi.reviews.Review"><code class="docutils literal notranslate"><span class="pre">Review</span></code></a><ul>
+<li><a class="reference internal" href="#ghapi.reviews.Review.stage_comment"><code class="docutils literal notranslate"><span class="pre">Review.stage_comment()</span></code></a></li>
 <li><a class="reference internal" href="#ghapi.reviews.Review.submit"><code class="docutils literal notranslate"><span class="pre">Review.submit()</span></code></a></li>
 </ul>
 </li>

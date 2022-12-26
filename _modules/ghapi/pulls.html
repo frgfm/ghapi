@@ -277,7 +277,7 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">_info</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_info</span>
 
-    <span class="k">def</span> <span class="nf">get_info</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]]]:</span>
+<div class="viewcode-block" id="PullRequest.get_info"><a class="viewcode-back" href="../../pulls.html#ghapi.pulls.PullRequest.get_info">[docs]</a>    <span class="k">def</span> <span class="nf">get_info</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]]]:</span>
         <span class="sd">&quot;&quot;&quot;Parses high-level information from the Pull Request&quot;&quot;&quot;</span>
 
         <span class="k">return</span> <span class="p">{</span>
@@ -296,7 +296,7 @@
                 <span class="s2">&quot;branch&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">info</span><span class="p">[</span><span class="s2">&quot;head&quot;</span><span class="p">][</span><span class="s2">&quot;ref&quot;</span><span class="p">],</span>
                 <span class="s2">&quot;sha&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">info</span><span class="p">[</span><span class="s2">&quot;head&quot;</span><span class="p">][</span><span class="s2">&quot;sha&quot;</span><span class="p">],</span>
             <span class="p">},</span>
-        <span class="p">}</span>
+        <span class="p">}</span></div>
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">diff</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
@@ -313,14 +313,14 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">_diff</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="n">content</span><span class="o">.</span><span class="n">decode</span><span class="p">()</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_diff</span>
 
-    <span class="k">def</span> <span class="nf">get_diff</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">List</span><span class="p">[</span><span class="n">Tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]]]:</span>
+<div class="viewcode-block" id="PullRequest.get_diff"><a class="viewcode-back" href="../../pulls.html#ghapi.pulls.PullRequest.get_diff">[docs]</a>    <span class="k">def</span> <span class="nf">get_diff</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">List</span><span class="p">[</span><span class="n">Tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]]]:</span>
         <span class="sd">&quot;&quot;&quot;Parses the PR diff</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            a dictionary where each key is a file path and each value is a list of tuples. Each tuple has two elements:</span>
 <span class="sd">                the diff header, and the actuall diff string.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="n">parse_diff_body</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">diff</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="n">parse_diff_body</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">diff</span><span class="p">)</span></div></div>
 </pre></div>
         </article>
       </div>

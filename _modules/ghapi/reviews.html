@@ -233,7 +233,7 @@
 <span class="sd">    &gt;&gt;&gt; from ghapi.reviews import Review</span>
 <span class="sd">    &gt;&gt;&gt; pr.conn.set_token(&quot;MY_DUMMY_TOKEN&quot;)</span>
 <span class="sd">    &gt;&gt;&gt; review = Review(pr, conn)</span>
-<span class="sd">    &gt;&gt;&gt; review.add_comment(&quot;README.md&quot;, &quot;This is weird!&quot;, 9)</span>
+<span class="sd">    &gt;&gt;&gt; review.stage_comment(&quot;README.md&quot;, &quot;This is weird!&quot;, 9)</span>
 <span class="sd">    &gt;&gt;&gt; review.submit(&quot;Thanks for the PR!\nI left a few comments!&quot;)</span>
 
 <span class="sd">    Args:</span>
@@ -252,7 +252,7 @@
         <span class="c1"># Create the pending review</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">pending_comments</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]</span> <span class="o">=</span> <span class="p">[]</span>
 
-    <span class="k">def</span> <span class="nf">stage_comment</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">body</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">line</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">:</span> <span class="n">Any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<div class="viewcode-block" id="Review.stage_comment"><a class="viewcode-back" href="../../reviews.html#ghapi.reviews.Review.stage_comment">[docs]</a>    <span class="k">def</span> <span class="nf">stage_comment</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">body</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">line</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">:</span> <span class="n">Any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;Stage a comment for the review</span>
 
 <span class="sd">        Args:</span>
@@ -262,7 +262,7 @@
 <span class="sd">                the last line of the range that your comment applies to.</span>
 <span class="sd">            kwargs: keyword arguments for comment creation</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">pending_comments</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">dict</span><span class="p">(</span><span class="n">path</span><span class="o">=</span><span class="n">path</span><span class="p">,</span> <span class="n">body</span><span class="o">=</span><span class="n">body</span><span class="p">,</span> <span class="n">line</span><span class="o">=</span><span class="n">line</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pending_comments</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">dict</span><span class="p">(</span><span class="n">path</span><span class="o">=</span><span class="n">path</span><span class="p">,</span> <span class="n">body</span><span class="o">=</span><span class="n">body</span><span class="p">,</span> <span class="n">line</span><span class="o">=</span><span class="n">line</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">))</span></div>
 
 <div class="viewcode-block" id="Review.submit"><a class="viewcode-back" href="../../reviews.html#ghapi.reviews.Review.submit">[docs]</a>    <span class="k">def</span> <span class="nf">submit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">body</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">action</span><span class="p">:</span> <span class="n">ReviewAction</span> <span class="o">=</span> <span class="n">ReviewAction</span><span class="o">.</span><span class="n">COMMENT</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;Submit a review</span>
