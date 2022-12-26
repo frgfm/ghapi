@@ -127,4 +127,4 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
-ghapi_client/version.py
+ghapi/version.py
