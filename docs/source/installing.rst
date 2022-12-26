@@ -22,7 +22,7 @@ Install the last stable release of the package using `conda <https://docs.conda.
 
 .. code:: bash
 
-    conda install -c frgfm ghapi
+    conda install -c frgfm ghapi-client
 
 
 Via Git
