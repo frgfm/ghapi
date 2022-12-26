@@ -32,17 +32,19 @@ class Review:
 
     Args:
         pr: a pull request object
+        conn: connection object
     """
 
     ROUTES: Dict[str, str] = {
         "create": "/repos/{owner}/{repo}/pulls/{pull_number}/reviews",
     }
 
-    def __init__(self, pr: PullRequest) -> None:
+    def __init__(self, pr: PullRequest, conn: Union[Connection, None] = None) -> None:
         self.pr = pr
-        self.conn = pr.conn
+        self.conn = conn if isinstance(conn, Connection) else pr.conn
         # Check that the connection is valid
-        isinstance(self.conn.token, str)
+        if not isinstance(self.conn.token, str):
+            raise ValueError("A valid token is required to submit reviews. Please specify the `conn` arg.")
         # Create the pending review
         self.pending_comments: List[Dict[str, Any]] = []
 

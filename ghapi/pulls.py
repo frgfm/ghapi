@@ -51,7 +51,7 @@ class PullRequest:
     def __init__(self, repo: Repository, pull_number: int, conn: Union[Connection, None] = None) -> None:
         self.repo = repo
         self.pull_number = pull_number
-        self.conn = conn if isinstance(conn, Connection) else Connection()
+        self.conn = conn if isinstance(conn, Connection) else repo.conn
         self.reset()
 
     def reset(self) -> None:
