@@ -7,5 +7,5 @@ ghapi.reviews
 
 .. autoclass:: Review
 
-    .. automethod:: add_comment
+    .. automethod:: stage_comment
     .. automethod:: submit

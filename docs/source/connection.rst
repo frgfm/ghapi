@@ -7,5 +7,5 @@ ghapi.connection
 
 .. autoclass:: Connection
 
-    .. automethod:: get_info
-    .. automethod:: get_diff
+    .. automethod:: resolve
+    .. automethod:: set_token
