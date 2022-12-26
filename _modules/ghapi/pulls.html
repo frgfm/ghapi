@@ -245,8 +245,7 @@
 <span class="sd">    &gt;&gt;&gt; pr.get_info()</span>
 
 <span class="sd">    Args:</span>
-<span class="sd">        owner: GitHub login of the repository&#39;s owner</span>
-<span class="sd">        repo: name of the repository</span>
+<span class="sd">        repo: the parent repository object</span>
 <span class="sd">        pull_number: the PR number</span>
 <span class="sd">        conn: connection object</span>
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -256,7 +255,7 @@
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">repo</span><span class="p">:</span> <span class="n">Repository</span><span class="p">,</span> <span class="n">pull_number</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">conn</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Connection</span><span class="p">,</span> <span class="kc">None</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">repo</span> <span class="o">=</span> <span class="n">repo</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">pull_number</span> <span class="o">=</span> <span class="n">pull_number</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">conn</span> <span class="o">=</span> <span class="n">conn</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">conn</span><span class="p">,</span> <span class="n">Connection</span><span class="p">)</span> <span class="k">else</span> <span class="n">Connection</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">conn</span> <span class="o">=</span> <span class="n">conn</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">conn</span><span class="p">,</span> <span class="n">Connection</span><span class="p">)</span> <span class="k">else</span> <span class="n">repo</span><span class="o">.</span><span class="n">conn</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">reset</span><span class="p">()</span>
 
     <span class="k">def</span> <span class="nf">reset</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
