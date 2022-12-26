@@ -1,9 +1,31 @@
 import pytest
 
+from ghapi.connection import Connection
 from ghapi.exceptions import HTTPRequestException
 from ghapi.pulls import PullRequest
 from ghapi.repos import Repository
 from ghapi.reviews import Review
+
+
+@pytest.mark.parametrize(
+    "owner, repo, pull_number, token, expected_error",
+    [
+        ["owner", "repo", 2, None, ValueError],
+        ["owner", "repo", 2, "DUMMY_TOKEN", None],
+    ],
+)
+def test_review_constructor(owner, repo, pull_number, token, expected_error):
+    conn = Connection(token)
+    pr = PullRequest(Repository(owner, repo, conn), pull_number)
+
+    if expected_error is None:
+        review = Review(pr)
+        assert isinstance(review.pr, PullRequest)
+        assert isinstance(review.conn, Connection) and review.conn.token == token
+        assert len(review.pending_comments) == 0
+    else:
+        with pytest.raises(ValueError):
+            Review(pr)
 
 
 @pytest.mark.parametrize(
