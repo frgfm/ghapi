@@ -32,9 +32,9 @@ This project uses [GitHub API](https://docs.github.com/en/rest) to fetch informa
 You can find the exhaustive list of supported features in the [documentation](https://frgfm.github.io/ghapi). For instance, you can retrieve basic information about your pull request as follows:
 
 ```python
-from ghapi.pulls import PullRequest
+from ghapi.pulls import Repository, PullRequest
 
-pr = PullRequest("frgfm", "torch-cam", 187)
+pr = PullRequest(Repository("frgfm", "torch-cam"), 187)
 # Get the PR information
 pr.get_info()
 ```
@@ -79,9 +79,7 @@ If you're interested in reviewing the pull request, you might be interested in t
 # Retrieve the code diff
 full_diff = pr.get_diff()
 # Print the first diff section
-diff_head, diff_str = full_diff["torchcam/methods/gradient.py"][0]
-print(diff_head)
-print(diff_str)
+print("\n".join(full_diff["torchcam/methods/gradient.py"][0]))
 ```
 
 ```
