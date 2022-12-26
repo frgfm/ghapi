@@ -40,8 +40,7 @@ class PullRequest:
     >>> pr.get_info()
 
     Args:
-        owner: GitHub login of the repository's owner
-        repo: name of the repository
+        repo: the parent repository object
         pull_number: the PR number
         conn: connection object
     """

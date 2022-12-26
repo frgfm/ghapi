@@ -42,6 +42,8 @@ class Connection:
 
         Args:
             route: relative URL of the route
+        Returns:
+            the absolute URL of the route
         """
         return urljoin(self.url, route)
 
