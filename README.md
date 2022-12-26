@@ -106,7 +106,22 @@ print("\n".join(full_diff["torchcam/methods/gradient.py"][0]))
 
 ## Setup
 
+
 Python 3.6 (or higher) and [pip](https://pip.pypa.io/en/stable/)/[conda](https://docs.conda.io/en/latest/miniconda.html) are required to install `ghapi`.
+
+### Stable release
+
+You can install the last stable release of the package using [pypi](https://pypi.org/project/ghapi-client/) as follows:
+
+```shell
+pip install ghapi-client
+```
+
+or using [conda](https://anaconda.org/frgfm/ghapi-client):
+
+```shell
+conda install -c frgfm ghapi-client
+```
 
 ### Developer installation
 
