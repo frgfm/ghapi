@@ -240,8 +240,8 @@
 <div class="viewcode-block" id="PullRequest"><a class="viewcode-back" href="../../pulls.html#ghapi.pulls.PullRequest">[docs]</a><span class="k">class</span> <span class="nc">PullRequest</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;Implements a Pull Request object</span>
 
-<span class="sd">    &gt;&gt;&gt; from ghapi import Repo, PullRequest</span>
-<span class="sd">    &gt;&gt;&gt; pr = PullRequest(Repo(&quot;frgfm&quot;, &quot;torch-cam&quot;), 187)</span>
+<span class="sd">    &gt;&gt;&gt; from ghapi import Repository, PullRequest</span>
+<span class="sd">    &gt;&gt;&gt; pr = PullRequest(Repository(&quot;frgfm&quot;, &quot;torch-cam&quot;), 187)</span>
 <span class="sd">    &gt;&gt;&gt; pr.get_info()</span>
 
 <span class="sd">    Args:</span>
