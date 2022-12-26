@@ -18,7 +18,7 @@ def parse_diff_body(diff_body: str) -> Dict[str, List[Tuple[str, str]]]:
     """This will need to be refactored using regex"""
     # Split by files
     file_split = diff_body.split("diff --git ")[1:]
-    file_names = [file_str.split("\n")[0].split("b/")[1] for file_str in file_split]
+    file_names = [file_str.split("\n")[0].split(" b/")[1].strip() for file_str in file_split]
 
     # Split by sections
     file_diffs = [
