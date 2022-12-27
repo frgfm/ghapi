@@ -86,21 +86,14 @@ If you're interested in reviewing the pull request, you might be interested in t
 # Retrieve the code diff
 full_diff = pr.get_diff()
 # Print the first diff section
-print("\n".join(full_diff["torchcam/methods/gradient.py"][0]))
+print(full_diff["torchcam/methods/gradient.py"][0]["text"])
 ```
-
+which yields:
 ```
-@@ -149,7 +149,9 @@ class GradCAMpp(_GradCAM):
-         input_shape: shape of the expected input tensor excluding the batch dimension
-     """
-
 -    def _get_weights(self, class_idx: Union[int, List[int]], scores: Tensor, **kwargs: Any) -> List[Tensor]:
 +    def _get_weights(
 +        self, class_idx: Union[int, List[int]], scores: Tensor, eps: float = 1e-8, **kwargs: Any
 +    ) -> List[Tensor]:
-         """Computes the weight coefficients of the hooked activation maps."""
-
-         # Backpropagate
 ```
 
 
