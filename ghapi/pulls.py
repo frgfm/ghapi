@@ -16,7 +16,7 @@ __all__ = ["PullRequest"]
 
 
 OInt = Union[int, None]
-FILE_PATTERN = re.compile(r"^diff\s\-\-git\sa/(?P<prev>[\w\/\.]+)\sb/(?P<new>[\w\/\.]+)$")
+FILE_PATTERN = re.compile(rf"^diff\s\-\-git\sa/(?P<prev>\S+)\sb/(?P<new>\S+)$")
 SECTION_PATTERN = re.compile(r"^@@\s\-(?P<prev>\d+),\d+\s\+(?P<new>\d+),\d+\s@@")
 
 
