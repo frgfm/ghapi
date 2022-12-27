@@ -1,7 +1,22 @@
 import pytest
 
-from ghapi.pulls import PullRequest, parse_diff_body
+from ghapi.pulls import PullRequest, parse_diff_body, parse_file_diff
 from ghapi.repos import Repository
+
+
+@pytest.mark.parametrize(
+    "file_diff, expected_parsing",
+    [
+        # https://github.com/frgfm/torch-cam/pull/115
+        [
+            'a/dummy_lib/core.py b/dummy_lib/core.py\nindex e52afda..cced706 100644\n--- a/dummy_lib/core.py\n+++ b/dummy_lib/core.py\n@@ -1,12 +1,12 @@\n # Copyright (C) 2022, François-Guillaume Fernandez.\n-\n # This program is licensed under the Apache License 2.0.\n # See LICENSE or go to <https://www.apache.org/licenses/LICENSE-2.0> for full license details.\n-\n from enum import Enum\n from typing import List\n \n-__all__ = ["greet_contributor", "convert_temperature_sequences", "TemperatureScale"]\n+__all__ = [\n+    "greet_contributor", "convert_temperature_sequences", "TemperatureScale"\n+]\n \n \n class TemperatureScale(Enum):\n@@ -47,9 +47,14 @@ def convert_temperature_sequences(\n     if input_scale == output_scale:\n         return input_temperatures\n \n-    if input_scale == TemperatureScale.FAHRENHEIT and output_scale == TemperatureScale.CELSIUS:\n-        return [(fahrenheit_temp - 32) * 5 / 9 for fahrenheit_temp in input_temperatures]\n-    elif input_scale == TemperatureScale.CELSIUS and output_scale == TemperatureScale.FAHRENHEIT:\n-        return [celsius_temp * 9 / 5 + 32 for celsius_temp in input_temperatures]\n+    if (input_scale == TemperatureScale.FAHRENHEIT\n+            and output_scale == TemperatureScale.CELSIUS):\n+        return [(fahrenheit_temp - 32) * 5 / 9\n+                for fahrenheit_temp in input_temperatures]\n+    elif (input_scale == TemperatureScale.CELSIUS\n+          and output_scale == TemperatureScale.FAHRENHEIT):\n+        return [\n+            celsius_temp * 9 / 5 + 32 for celsius_temp in input_temperatures\n+        ]\n \n     raise NotImplementedError\n',  # noqa: E501
+            [(2, 2, None, None, 6, 6), (5, 5, None, None, 9, 9), (9, 9, 7, 9, 13, 16), (50, 53, 50, 58, 24, 36)],
+        ],
+    ],
+)
+def test_parse_file_diff(file_diff, expected_parsing):
+    out = parse_file_diff(file_diff)
+    assert out == expected_parsing
 
 
 @pytest.mark.parametrize(
@@ -24,14 +39,15 @@ from ghapi.repos import Repository
         # https://github.com/frgfm/ci-benchmark/pull/15/files
         [
             'diff --git a/dummy_lib/core.py b/dummy_lib/core.py\nindex e52afda..cced706 100644\n--- a/dummy_lib/core.py\n+++ b/dummy_lib/core.py\n@@ -1,12 +1,12 @@\n # Copyright (C) 2022, François-Guillaume Fernandez.\n-\n # This program is licensed under the Apache License 2.0.\n # See LICENSE or go to <https://www.apache.org/licenses/LICENSE-2.0> for full license details.\n-\n from enum import Enum\n from typing import List\n \n-__all__ = ["greet_contributor", "convert_temperature_sequences", "TemperatureScale"]\n+__all__ = [\n+    "greet_contributor", "convert_temperature_sequences", "TemperatureScale"\n+]\n \n \n class TemperatureScale(Enum):\n@@ -47,9 +47,14 @@ def convert_temperature_sequences(\n     if input_scale == output_scale:\n         return input_temperatures\n \n-    if input_scale == TemperatureScale.FAHRENHEIT and output_scale == TemperatureScale.CELSIUS:\n-        return [(fahrenheit_temp - 32) * 5 / 9 for fahrenheit_temp in input_temperatures]\n-    elif input_scale == TemperatureScale.CELSIUS and output_scale == TemperatureScale.FAHRENHEIT:\n-        return [celsius_temp * 9 / 5 + 32 for celsius_temp in input_temperatures]\n+    if (input_scale == TemperatureScale.FAHRENHEIT\n+            and output_scale == TemperatureScale.CELSIUS):\n+        return [(fahrenheit_temp - 32) * 5 / 9\n+                for fahrenheit_temp in input_temperatures]\n+    elif (input_scale == TemperatureScale.CELSIUS\n+          and output_scale == TemperatureScale.FAHRENHEIT):\n+        return [\n+            celsius_temp * 9 / 5 + 32 for celsius_temp in input_temperatures\n+        ]\n \n     raise NotImplementedError\ndiff --git a/tests/test_core.py b/tests/test_core.py\nindex 90d3940..cdecb87 100644\n--- a/tests/test_core.py\n+++ b/tests/test_core.py\n@@ -1,6 +1,8 @@\n import pytest\n \n-from dummy_lib.core import TemperatureScale, convert_temperature_sequences, greet_contributor\n+from dummy_lib.core import convert_temperature_sequences\n+from dummy_lib.core import greet_contributor\n+from dummy_lib.core import TemperatureScale\n \n \n @pytest.mark.parametrize(\n@@ -44,10 +46,13 @@ def test_greet_contributor(name, expected_output):\n             [10, -10.0, 0],\n         ],\n         # Error\n-        [[10, -10.0, 0], TemperatureScale.CELSIUS, "kelvin", NotImplementedError, None],\n+        [[10, -10.0, 0], TemperatureScale.CELSIUS, "kelvin",\n+         NotImplementedError, None],\n     ],\n )\n-def test_convert_temperature_sequences(input_temperatures, input_scale, output_scale, error_type, expected_output):\n+def test_convert_temperature_sequences(input_temperatures, input_scale,\n+                                       output_scale, error_type,\n+                                       expected_output):\n     kwargs = {}\n     if input_scale is not None:\n         kwargs["input_scale"] = input_scale\n@@ -55,7 +60,8 @@ def test_convert_temperature_sequences(input_temperatures, input_scale, output_s\n         kwargs["output_scale"] = output_scale\n \n     if error_type is None:\n-        assert convert_temperature_sequences(input_temperatures, **kwargs) == expected_output\n+        assert (convert_temperature_sequences(input_temperatures,\n+                                              **kwargs) == expected_output)\n     else:\n         with pytest.raises(error_type):\n             convert_temperature_sequences(input_temperatures, **kwargs)\n',  # noqa: E501
-            {"dummy_lib/core.py": 2, "tests/test_core.py": 3},
+            {"dummy_lib/core.py": 4, "tests/test_core.py": 4},
         ],
     ],
 )
 def test_parse_diff_body(diff_body, expected_parsing):
     out = parse_diff_body(diff_body)
     assert len(out) == len(expected_parsing)
-    assert all(len(out[file]) == num_sections for file, num_sections in expected_parsing.items())
+    for file, num_sections in expected_parsing.items():
+        assert len(out[file]) == num_sections
 
 
 @pytest.mark.parametrize(
