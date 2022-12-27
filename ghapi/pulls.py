@@ -57,12 +57,12 @@ def parse_file_diff(line_split: List[str]) -> List[Tuple[OInt, OInt, OInt, OInt,
                 blocks.append((left_start, left_end, right_start, right_end, abs_start, abs_end))
                 abs_start, left_start, right_start = None, None, None
 
-    # Final one
-    if isinstance(abs_start, int):
-        abs_end = _start + 2 + idx
-        left_end = left_idx if isinstance(left_start, int) else None
-        right_end = right_idx if isinstance(right_start, int) else None
-        blocks.append((left_start, left_end, right_start, right_end, abs_start, abs_end))
+        # Final one
+        if isinstance(abs_start, int):
+            abs_end = _start + 2 + idx
+            left_end = left_idx if isinstance(left_start, int) else None
+            right_end = right_idx if isinstance(right_start, int) else None
+            blocks.append((left_start, left_end, right_start, right_end, abs_start, abs_end))
 
     return blocks
 
