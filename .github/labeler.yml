@@ -16,6 +16,9 @@
 'module: search':
 - ghapi/search.py
 
+'module: users':
+- ghapi/users.py
+
 'ext: docs':
 - docs/*
 
