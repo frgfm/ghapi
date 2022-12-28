@@ -13,6 +13,9 @@
 'module: repos':
 - ghapi/repos.py
 
+'module: search':
+- ghapi/search.py
+
 'ext: docs':
 - docs/*
 
