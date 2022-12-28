@@ -138,6 +138,9 @@ class PullRequest:
         return {
             "title": self.info["title"],
             "created_at": self.info["created_at"],
+            "updated_at": self.info["updated_at"],
+            "closed_at": self.info["closed_at"],
+            "merged_at": self.info["merged_at"],
             "description": self.info["body"],
             "labels": self.info["labels"],
             "user": self.info["user"]["login"],
@@ -145,6 +148,8 @@ class PullRequest:
             "changed_files": self.info["changed_files"],
             "additions": self.info["additions"],
             "deletions": self.info["deletions"],
+            "num_comments": self.info["comments"],
+            "num_review_comments": self.info["num_review_comments"],
             "base": {"branch": self.info["base"]["ref"], "sha": self.info["base"]["sha"]},
             "head": {
                 "repo": self.info["head"]["repo"]["full_name"],
