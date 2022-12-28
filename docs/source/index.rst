@@ -27,6 +27,8 @@ This project will allow you to interact with `GitHub API <https://docs.github.co
    repos
    pulls
    reviews
+   search
+   users
 
 .. toctree::
    :maxdepth: 1
