@@ -27,6 +27,7 @@ class Repository:
     """
 
     ROUTES: Dict[str, str] = {
+        "info": "/repos/{owner}/{repo}",
         "pulls": "/repos/{owner}/{repo}/pulls",
     }
 
@@ -39,11 +40,40 @@ class Repository:
         self.reset()
 
     def reset(self) -> None:
+        self._info: Union[Dict[str, Any], None] = None
         self._pulls: Union[List[Dict[str, Any]], None] = None
 
     def __repr__(self) -> str:
         class_name = self.__class__.__name__
         return f"{class_name}(owner='{self.owner}', name='{self.name}')"
+
+    @property
+    def info(self) -> Dict[str, Any]:
+        if not isinstance(self._info, dict):
+            response = requests.get(self.conn.resolve(self.ROUTES["info"].format(owner=self.owner, repo=self.name)))
+            if response.status_code != 200:
+                raise HTTPRequestException(response.status_code, response.text)
+
+            self._info = response.json()
+        return self._info
+
+    def get_info(self) -> Dict[str, Union[str, Dict[str, str]]]:
+        """Parses high-level information from the Repository"""
+
+        return {
+            "full_name": self.info["full_name"],
+            "created_at": self.info["created_at"],
+            "updated_at": self.info["updated_at"],
+            "description": self.info["description"],
+            "is_fork": self.info["fork"],
+            "is_private": self.info["private"],
+            "language": self.info["language"],
+            "stars_count": self.info["stargazers_count"],
+            "forks_count": self.info["forks_count"],
+            "watchers_count": self.info["watchers_count"],
+            "topics": self.info["topics"],
+            "license": self.info["license"],
+        }
 
     def _list_pulls(self, **kwargs: Any) -> List[Dict[str, Any]]:
         if not isinstance(self._pulls, list):
