@@ -69,8 +69,8 @@ def test_parse_diff_body(diff_body, expected_parsing):
 @pytest.mark.parametrize(
     "owner, repo, pr_num, payload_len, created_at",
     [
-        ["frgfm", "torch-cam", 115, 11, "2021-11-14T16:12:44Z"],
-        ["frgfm", "torch-cam", 187, 11, "2022-09-18T17:08:50Z"],
+        ["frgfm", "torch-cam", 115, 16, "2021-11-14T16:12:44Z"],
+        ["frgfm", "torch-cam", 187, 16, "2022-09-18T17:08:50Z"],
     ],
 )
 def test_pull_request_get_info(owner, repo, pr_num, payload_len, created_at):
