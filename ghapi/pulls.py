@@ -149,7 +149,7 @@ class PullRequest:
             "additions": self.info["additions"],
             "deletions": self.info["deletions"],
             "num_comments": self.info["comments"],
-            "num_review_comments": self.info["num_review_comments"],
+            "num_review_comments": self.info["review_comments"],
             "base": {"branch": self.info["base"]["ref"], "sha": self.info["base"]["sha"]},
             "head": {
                 "repo": self.info["head"]["repo"]["full_name"],
