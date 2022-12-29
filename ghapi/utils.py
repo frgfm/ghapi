@@ -5,10 +5,10 @@
 
 from typing import Any, Dict
 
-__all__ = ["parse_repo", "parse_pull", "parse_comment", "parse_user"]
+__all__ = ["parse_repo", "parse_pull", "parse_comment", "parse_user", "parse_review"]
 
 
-def parse_repo(payload: Dict[str, Any]) -> Dict[str, str]:
+def parse_repo(payload: Dict[str, Any]) -> Dict[str, Any]:
     """Parses high-level information from the repository payload"""
     return {
         "full_name": payload["full_name"],
@@ -79,4 +79,16 @@ def parse_user(payload: Dict[str, Any]) -> Dict[str, Any]:
         "num_public_repos": payload["public_repos"],
         "created_at": payload["created_at"],
         "updated_at": payload["updated_at"],
+    }
+
+
+def parse_review(payload: Dict[str, Any]) -> Dict[str, Any]:
+    """Parses high-level information from the review payload"""
+    return {
+        "id": payload["id"],
+        "user": payload["user"]["login"],
+        "body": payload["body"],
+        "state": payload["state"],
+        "submitted_at": payload["submitted_at"],
+        "commit_id": payload["commit_id"],
     }

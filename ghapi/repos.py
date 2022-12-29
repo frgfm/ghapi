@@ -58,7 +58,7 @@ class Repository:
             self._info = response.json()
         return self._info
 
-    def get_info(self) -> Dict[str, Union[str, Dict[str, str]]]:
+    def get_info(self) -> Dict[str, Any]:
         """Parses high-level information from the Repository"""
         return parse_repo(self.info)
 

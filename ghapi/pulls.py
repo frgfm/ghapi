@@ -11,7 +11,7 @@ import requests
 from .connection import Connection
 from .exceptions import HTTPRequestException
 from .repos import Repository
-from .utils import parse_pull
+from .utils import parse_comment, parse_pull, parse_review
 
 __all__ = ["PullRequest"]
 
@@ -123,9 +123,9 @@ class PullRequest:
     def reset(self) -> None:
         self._info: Union[Dict[str, Any], None] = None
         self._diff: Union[str, None] = None
-        self._comments: Union[Dict[str, Any], None] = None
-        self._review_comments: Union[Dict[str, Any], None] = None
-        self._reviews: Union[Dict[str, Any], None] = None
+        self._comments: Union[List[Dict[str, Any]], None] = None
+        self._review_comments: Union[List[Dict[str, Any]], None] = None
+        self._reviews: Union[List[Dict[str, Any]], None] = None
 
     def _query(
         self, subroute: str, params: Union[Dict[str, str], None] = None, headers: Union[Dict[str, str], None] = None
@@ -210,7 +210,7 @@ class PullRequest:
         Returns:
             list of review comments
         """
-        return [self._parse_comment(comment) for comment in self._list_review_comments(**kwargs)]
+        return [parse_comment(comment) for comment in self._list_review_comments(**kwargs)]
 
     def _list_reviews(self, **kwargs: Any) -> List[Dict[str, Any]]:
         if not isinstance(self._reviews, list):
@@ -229,4 +229,4 @@ class PullRequest:
         Returns:
             list of reviews
         """
-        return [self._parse_info(review) for review in self._list_reviews(**kwargs)]
+        return [parse_review(review) for review in self._list_reviews(**kwargs)]
