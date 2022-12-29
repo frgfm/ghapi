@@ -9,6 +9,7 @@ import requests
 
 from .connection import Connection
 from .exceptions import HTTPRequestException
+from .utils import parse_repo
 
 __all__ = ["Repository"]
 
@@ -59,21 +60,7 @@ class Repository:
 
     def get_info(self) -> Dict[str, Union[str, Dict[str, str]]]:
         """Parses high-level information from the Repository"""
-
-        return {
-            "full_name": self.info["full_name"],
-            "created_at": self.info["created_at"],
-            "updated_at": self.info["updated_at"],
-            "description": self.info["description"],
-            "is_fork": self.info["fork"],
-            "is_private": self.info["private"],
-            "language": self.info["language"],
-            "stars_count": self.info["stargazers_count"],
-            "forks_count": self.info["forks_count"],
-            "watchers_count": self.info["watchers_count"],
-            "topics": self.info["topics"],
-            "license": self.info["license"],
-        }
+        return parse_repo(self.info)
 
     def _list_pulls(self, **kwargs: Any) -> List[Dict[str, Any]]:
         if not isinstance(self._pulls, list):

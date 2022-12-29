@@ -9,6 +9,7 @@ import requests
 
 from .connection import Connection
 from .exceptions import HTTPRequestException
+from .utils import parse_user
 
 __all__ = ["User"]
 
@@ -54,20 +55,7 @@ class User:
     def get_info(self) -> Dict[str, Union[str, Dict[str, str]]]:
         """Parses high-level information from the User"""
 
-        return {
-            "login": self.info["login"],
-            "name": self.info["name"],
-            "company": self.info["company"],
-            "blog": self.info["blog"],
-            "location": self.info["location"],
-            "bio": self.info["bio"],
-            "email": self.info["email"],
-            "twitter_username": self.info["twitter_username"],
-            "num_followers": self.info["followers"],
-            "num_public_repos": self.info["public_repos"],
-            "created_at": self.info["created_at"],
-            "updated_at": self.info["updated_at"],
-        }
+        return parse_user(self.info)
 
     def _list_repos(self, **kwargs: Any) -> List[Dict[str, Any]]:
         if not isinstance(self._repos, list):
