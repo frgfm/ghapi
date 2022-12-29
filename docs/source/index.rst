@@ -7,7 +7,7 @@ Welcome to the documentation of this Python wrapper for the GitHub API |:hugging
 This project will allow you to interact with `GitHub API <https://docs.github.com/en/rest>`_ directly in Python. More specifically, the supported features include:
 
 * `Repository <repos.html>`_: fetch high-level information and enumerate the pull requests.
-* `Pull Request <pulls.html>`_: fetch high-level information or the code difference.
+* `Pull Request <pulls.html>`_: fetch high-level information, the code difference, list the reviews or the comments.
 * `Review <reviews.html>`_: stage comment and submit a review to a PR.
 * `User <users.html>`_: fetch high-level information and enumerate the repositories.
 * `Search <search.html>`_: query repositories and users.
