@@ -184,8 +184,8 @@ class PullRequest:
         """List the comments of a Pull Request.
 
         Args:
-            kwargs: query parameters of
-                `GitHub API <https://docs.github.com/en/rest/pulls/comments#list-review-comments-on-a-pull-request>`_
+            kwargs: query parameters of `List issue comments
+                <https://docs.github.com/en/rest/issues/comments#list-issue-comments>`_
         Returns:
             list of comments
         """
@@ -205,10 +205,10 @@ class PullRequest:
         """List the review comments of a Pull Request.
 
         Args:
-            kwargs: query parameters of
-                `GitHub API <https://docs.github.com/en/rest/pulls/comments#list-review-comments-on-a-pull-request>`_
+            kwargs: query parameters of `List review comments
+                <https://docs.github.com/en/rest/pulls/comments#list-review-comments-on-a-pull-request>`_
         Returns:
-            list of comments
+            list of review comments
         """
         return [self._parse_comment(comment) for comment in self._list_review_comments(**kwargs)]
 
@@ -224,8 +224,8 @@ class PullRequest:
         """List the reviews of a Pull Request.
 
         Args:
-            kwargs: query parameters of
-                `GitHub API <https://docs.github.com/en/rest/pulls/reviews#list-reviews-for-a-pull-request>`_
+            kwargs: query parameters of `List reviews
+                <https://docs.github.com/en/rest/pulls/reviews#list-reviews-for-a-pull-request>`_
         Returns:
             list of reviews
         """
