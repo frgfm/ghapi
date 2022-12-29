@@ -92,3 +92,39 @@ def test_pull_request_get_diff(owner, repo, pr_num, num_files, num_sections):
     out = pr.get_diff()
     assert len(out) == num_files
     assert sum(len(sections) for sections in out.values()) == num_sections
+
+
+@pytest.mark.parametrize(
+    "owner, repo, pr_num, num_comments",
+    [
+        ["frgfm", "torch-cam", 115, 1],
+    ],
+)
+def test_pull_request_list_comments(owner, repo, pr_num, num_comments):
+    pr = PullRequest(Repository(owner, repo), pr_num)
+    out = pr.list_comments()
+    assert len(out) == num_comments and all(isinstance(elt, dict) for elt in out)
+
+
+@pytest.mark.parametrize(
+    "owner, repo, pr_num, num_comments",
+    [
+        ["frgfm", "torch-cam", 115, 0],
+    ],
+)
+def test_pull_request_list_review_comments(owner, repo, pr_num, num_comments):
+    pr = PullRequest(Repository(owner, repo), pr_num)
+    out = pr.list_review_comments()
+    assert len(out) == num_comments and all(isinstance(elt, dict) for elt in out)
+
+
+@pytest.mark.parametrize(
+    "owner, repo, pr_num, num_reviews",
+    [
+        ["frgfm", "torch-cam", 115, 0],
+    ],
+)
+def test_pull_request_list_reviews(owner, repo, pr_num, num_reviews):
+    pr = PullRequest(Repository(owner, repo), pr_num)
+    out = pr.list_reviews()
+    assert len(out) == num_reviews and all(isinstance(elt, dict) for elt in out)
