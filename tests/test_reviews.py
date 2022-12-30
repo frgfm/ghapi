@@ -57,7 +57,7 @@ def test_review_list_comments(mock_comment):
 
 
 def test_review_from_comments(mock_review):
-    conn = Connection(token="DUMMY_TOKEN", url="https://www.github.com")
+    conn = Connection(token="DUMMY_TOKEN", url="https://www.github.com")  # nosec B106
     pr = PullRequest(Repository("frgfm", "Holocron", conn), 260)
     comment = Comment("README.md", "Thanks!", 1)
     # Wrong api url
