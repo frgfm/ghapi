@@ -11,6 +11,7 @@ repos:
       - id: debug-statements
       - id: check-json
       - id: check-merge-conflict
+      - id: no-commit-to-branch
   - repo: https://github.com/psf/black
     rev: 22.3.0
     hooks:
