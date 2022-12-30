@@ -211,15 +211,19 @@
 <span class="c1"># See LICENSE or go to &lt;https://www.apache.org/licenses/LICENSE-2.0&gt; for full license details.</span>
 
 <span class="kn">from</span> <span class="nn">enum</span> <span class="kn">import</span> <span class="n">Enum</span>
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Union</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Type</span><span class="p">,</span> <span class="n">TypeVar</span><span class="p">,</span> <span class="n">Union</span>
 
 <span class="kn">import</span> <span class="nn">requests</span>
 
 <span class="kn">from</span> <span class="nn">.connection</span> <span class="kn">import</span> <span class="n">Connection</span>
 <span class="kn">from</span> <span class="nn">.exceptions</span> <span class="kn">import</span> <span class="n">verify_status</span>
 <span class="kn">from</span> <span class="nn">.pulls</span> <span class="kn">import</span> <span class="n">PullRequest</span>
+<span class="kn">from</span> <span class="nn">.utils</span> <span class="kn">import</span> <span class="n">parse_comment</span><span class="p">,</span> <span class="n">parse_review</span>
 
-<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;Review&quot;</span><span class="p">]</span>
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;Comment&quot;</span><span class="p">,</span> <span class="s2">&quot;Review&quot;</span><span class="p">]</span>
+
+
+<span class="n">T</span> <span class="o">=</span> <span class="n">TypeVar</span><span class="p">(</span><span class="s2">&quot;T&quot;</span><span class="p">,</span> <span class="n">bound</span><span class="o">=</span><span class="s2">&quot;Review&quot;</span><span class="p">)</span>
 
 
 <span class="k">class</span> <span class="nc">ReviewAction</span><span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="n">Enum</span><span class="p">):</span>
@@ -228,70 +232,165 @@
     <span class="n">COMMENT</span> <span class="o">=</span> <span class="s2">&quot;COMMENT&quot;</span>
 
 
+<div class="viewcode-block" id="Comment"><a class="viewcode-back" href="../../reviews.html#ghapi.reviews.Comment">[docs]</a><span class="k">class</span> <span class="nc">Comment</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Implements a comment object</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        path: the relative path to the file that necessitates a comment.</span>
+<span class="sd">        body: the text of the review comment.</span>
+<span class="sd">        line: the line of the blob in the pull request diff that the comment applies to. For a multi-line comment,</span>
+<span class="sd">            the last line of the range that your comment applies to.</span>
+<span class="sd">        kwargs: keyword arguments for comment (cf. `Review creation</span>
+<span class="sd">            &lt;https://docs.github.com/en/rest/pulls/reviews#create-a-review-for-a-pull-request--parameters&gt;`_)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">body</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">line</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">:</span> <span class="n">Any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">path</span> <span class="o">=</span> <span class="n">path</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">body</span> <span class="o">=</span> <span class="n">body</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">line</span> <span class="o">=</span> <span class="n">line</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">kwargs</span> <span class="o">=</span> <span class="n">kwargs</span>
+
+    <span class="k">def</span> <span class="nf">to_dict</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
+        <span class="sd">&quot;&quot;&quot;Dumps the comment into a dictionary processable by GitHub API&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="nb">dict</span><span class="p">(</span><span class="n">path</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="p">,</span> <span class="n">body</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">body</span><span class="p">,</span> <span class="n">line</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">line</span><span class="p">,</span> <span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">kwargs</span><span class="p">)</span></div>
+
+
 <div class="viewcode-block" id="Review"><a class="viewcode-back" href="../../reviews.html#ghapi.reviews.Review">[docs]</a><span class="k">class</span> <span class="nc">Review</span><span class="p">:</span>
     <span class="sa">r</span><span class="sd">&quot;&quot;&quot;Implements a Review object</span>
 
 <span class="sd">    &gt;&gt;&gt; from ghapi import Repository, PullRequest, Review</span>
-<span class="sd">    &gt;&gt;&gt; pr = PullRequest(Repository(&quot;frgfm&quot;, &quot;torch-cam&quot;), 187)</span>
-<span class="sd">    &gt;&gt;&gt; pr.conn.set_token(&quot;MY_DUMMY_TOKEN&quot;)</span>
-<span class="sd">    &gt;&gt;&gt; review = Review(pr)</span>
-<span class="sd">    &gt;&gt;&gt; review.stage_comment(&quot;README.md&quot;, &quot;This is weird!&quot;, 9)</span>
-<span class="sd">    &gt;&gt;&gt; review.submit(&quot;Thanks for the PR!\nI left a few comments!&quot;)</span>
+<span class="sd">    &gt;&gt;&gt; pr = PullRequest(Repository(&quot;frgfm&quot;, &quot;Holocron&quot;), 260)</span>
+<span class="sd">    &gt;&gt;&gt; review = Review(pr, 1212580495)</span>
+<span class="sd">    &gt;&gt;&gt; review.get_info()</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        pr: a pull request object</span>
+<span class="sd">        review_id: the review identifier</span>
 <span class="sd">        conn: connection object</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="n">ROUTES</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
         <span class="s2">&quot;create&quot;</span><span class="p">:</span> <span class="s2">&quot;/repos/</span><span class="si">{owner}</span><span class="s2">/</span><span class="si">{repo}</span><span class="s2">/pulls/</span><span class="si">{pull_number}</span><span class="s2">/reviews&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;info&quot;</span><span class="p">:</span> <span class="s2">&quot;/repos/</span><span class="si">{owner}</span><span class="s2">/</span><span class="si">{repo}</span><span class="s2">/pulls/</span><span class="si">{pull_number}</span><span class="s2">/reviews/</span><span class="si">{review_id}</span><span class="s2">&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;comments&quot;</span><span class="p">:</span> <span class="s2">&quot;/repos/</span><span class="si">{owner}</span><span class="s2">/</span><span class="si">{repo}</span><span class="s2">/pulls/</span><span class="si">{pull_number}</span><span class="s2">/reviews/</span><span class="si">{review_id}</span><span class="s2">/comments&quot;</span><span class="p">,</span>
     <span class="p">}</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pr</span><span class="p">:</span> <span class="n">PullRequest</span><span class="p">,</span> <span class="n">conn</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Connection</span><span class="p">,</span> <span class="kc">None</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pr</span><span class="p">:</span> <span class="n">PullRequest</span><span class="p">,</span> <span class="n">review_id</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">conn</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Connection</span><span class="p">,</span> <span class="kc">None</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">pr</span> <span class="o">=</span> <span class="n">pr</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">review_id</span> <span class="o">=</span> <span class="n">review_id</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">conn</span> <span class="o">=</span> <span class="n">conn</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">conn</span><span class="p">,</span> <span class="n">Connection</span><span class="p">)</span> <span class="k">else</span> <span class="n">pr</span><span class="o">.</span><span class="n">conn</span>
-        <span class="c1"># Check that the connection is valid (accessing the token property will check that itself)</span>
-        <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">conn</span><span class="o">.</span><span class="n">token</span><span class="p">,</span> <span class="nb">str</span><span class="p">)</span>
-        <span class="c1"># Create the pending review</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">pending_comments</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">reset</span><span class="p">()</span>
 
-<div class="viewcode-block" id="Review.stage_comment"><a class="viewcode-back" href="../../reviews.html#ghapi.reviews.Review.stage_comment">[docs]</a>    <span class="k">def</span> <span class="nf">stage_comment</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">body</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">line</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">:</span> <span class="n">Any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;Stage a comment for the review</span>
+    <span class="k">def</span> <span class="nf">reset</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_info</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">],</span> <span class="kc">None</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_comments</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]],</span> <span class="kc">None</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">info</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_info</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_info</span> <span class="o">=</span> <span class="n">verify_status</span><span class="p">(</span>
+                <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">conn</span><span class="o">.</span><span class="n">resolve</span><span class="p">(</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">ROUTES</span><span class="p">[</span><span class="s2">&quot;info&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                            <span class="n">owner</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">pr</span><span class="o">.</span><span class="n">repo</span><span class="o">.</span><span class="n">owner</span><span class="p">,</span>
+                            <span class="n">repo</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">pr</span><span class="o">.</span><span class="n">repo</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
+                            <span class="n">pull_number</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">pr</span><span class="o">.</span><span class="n">pull_number</span><span class="p">,</span>
+                            <span class="n">review_id</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">review_id</span><span class="p">,</span>
+                        <span class="p">)</span>
+                    <span class="p">)</span>
+                <span class="p">),</span>
+                <span class="mi">200</span><span class="p">,</span>
+            <span class="p">)</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_info</span>
+
+<div class="viewcode-block" id="Review.get_info"><a class="viewcode-back" href="../../reviews.html#ghapi.reviews.Review.get_info">[docs]</a>    <span class="k">def</span> <span class="nf">get_info</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
+        <span class="sd">&quot;&quot;&quot;Parses high-level information from the review payload&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">parse_review</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">info</span><span class="p">)</span></div>
+
+    <span class="k">def</span> <span class="nf">_list_comments</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">:</span> <span class="n">Any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]:</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_comments</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_comments</span> <span class="o">=</span> <span class="n">verify_status</span><span class="p">(</span>
+                <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">conn</span><span class="o">.</span><span class="n">resolve</span><span class="p">(</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">ROUTES</span><span class="p">[</span><span class="s2">&quot;comments&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                            <span class="n">owner</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">pr</span><span class="o">.</span><span class="n">repo</span><span class="o">.</span><span class="n">owner</span><span class="p">,</span>
+                            <span class="n">repo</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">pr</span><span class="o">.</span><span class="n">repo</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
+                            <span class="n">pull_number</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">pr</span><span class="o">.</span><span class="n">pull_number</span><span class="p">,</span>
+                            <span class="n">review_id</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">review_id</span><span class="p">,</span>
+                        <span class="p">)</span>
+                    <span class="p">),</span>
+                    <span class="n">params</span><span class="o">=</span><span class="n">kwargs</span><span class="p">,</span>
+                <span class="p">),</span>
+                <span class="mi">200</span><span class="p">,</span>
+            <span class="p">)</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_comments</span>
+
+<div class="viewcode-block" id="Review.list_comments"><a class="viewcode-back" href="../../reviews.html#ghapi.reviews.Review.list_comments">[docs]</a>    <span class="k">def</span> <span class="nf">list_comments</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">:</span> <span class="n">Any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]:</span>
+        <span class="sd">&quot;&quot;&quot;List the comments of a Pull Request Review.</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            path: the relative path to the file that necessitates a comment.</span>
-<span class="sd">            body: the text of the review comment.</span>
-<span class="sd">            line: the line of the blob in the pull request diff that the comment applies to. For a multi-line comment,</span>
-<span class="sd">                the last line of the range that your comment applies to.</span>
-<span class="sd">            kwargs: keyword arguments for comment creation</span>
+<span class="sd">            kwargs: query parameters of `List review comments</span>
+<span class="sd">                &lt;https://docs.github.com/en/rest/pulls/reviews#list-comments-for-a-pull-request-review&gt;`_</span>
+<span class="sd">        Returns:</span>
+<span class="sd">            list of comments</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">pending_comments</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">dict</span><span class="p">(</span><span class="n">path</span><span class="o">=</span><span class="n">path</span><span class="p">,</span> <span class="n">body</span><span class="o">=</span><span class="n">body</span><span class="p">,</span> <span class="n">line</span><span class="o">=</span><span class="n">line</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">))</span></div>
+        <span class="k">return</span> <span class="p">[</span><span class="n">parse_comment</span><span class="p">(</span><span class="n">comment</span><span class="p">)</span> <span class="k">for</span> <span class="n">comment</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_list_comments</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)]</span></div>
 
-<div class="viewcode-block" id="Review.submit"><a class="viewcode-back" href="../../reviews.html#ghapi.reviews.Review.submit">[docs]</a>    <span class="k">def</span> <span class="nf">submit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">body</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">action</span><span class="p">:</span> <span class="n">ReviewAction</span> <span class="o">=</span> <span class="n">ReviewAction</span><span class="o">.</span><span class="n">COMMENT</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;Submit a review</span>
+<div class="viewcode-block" id="Review.from_comments"><a class="viewcode-back" href="../../reviews.html#ghapi.reviews.Review.from_comments">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">from_comments</span><span class="p">(</span>
+        <span class="bp">cls</span><span class="p">:</span> <span class="n">Type</span><span class="p">[</span><span class="n">T</span><span class="p">],</span>
+        <span class="n">pr</span><span class="p">:</span> <span class="n">PullRequest</span><span class="p">,</span>
+        <span class="n">body</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+        <span class="n">comments</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Comment</span><span class="p">],</span>
+        <span class="n">action</span><span class="p">:</span> <span class="n">ReviewAction</span> <span class="o">=</span> <span class="n">ReviewAction</span><span class="o">.</span><span class="n">COMMENT</span><span class="p">,</span>
+        <span class="n">conn</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Connection</span><span class="p">,</span> <span class="kc">None</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">T</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;Submit a review from comments</span>
+
+<span class="sd">        &gt;&gt;&gt; from ghapi import Repository, PullRequest, Review, Comment</span>
+<span class="sd">        &gt;&gt;&gt; pr = PullRequest(Repository(&quot;owner-login&quot;, &quot;awesome-repo&quot;), 1)</span>
+<span class="sd">        &gt;&gt;&gt; pr.conn.set_token(&quot;MY_DUMMY_TOKEN&quot;)</span>
+<span class="sd">        &gt;&gt;&gt; comment = Comment(&quot;README.md&quot;, &quot;This is weird!&quot;, 9)</span>
+<span class="sd">        &gt;&gt;&gt; review = Review.from_comments(pr, &quot;Thanks for the PR :pray:&quot;, [comment])</span>
 
 <span class="sd">        Args:</span>
+<span class="sd">            pr: a pull request object</span>
 <span class="sd">            body: the body text of the pull request review.</span>
+<span class="sd">            comments: the review comments</span>
 <span class="sd">            action: the review action you want to perform.</span>
+<span class="sd">            conn: connection object</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">response</span> <span class="o">=</span> <span class="n">verify_status</span><span class="p">(</span>
+
+        <span class="c1"># Create the object</span>
+        <span class="n">review</span> <span class="o">=</span> <span class="bp">cls</span><span class="p">(</span><span class="n">pr</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">conn</span><span class="p">)</span>
+        <span class="c1"># Check that the connection is valid (accessing the token property will check that itself)</span>
+        <span class="nb">isinstance</span><span class="p">(</span><span class="n">review</span><span class="o">.</span><span class="n">conn</span><span class="o">.</span><span class="n">token</span><span class="p">,</span> <span class="nb">str</span><span class="p">)</span>
+
+        <span class="c1"># Submit the PR</span>
+        <span class="n">response</span> <span class="o">=</span> <span class="n">verify_status</span><span class="p">(</span>
             <span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">conn</span><span class="o">.</span><span class="n">resolve</span><span class="p">(</span>
-                    <span class="bp">self</span><span class="o">.</span><span class="n">ROUTES</span><span class="p">[</span><span class="s2">&quot;create&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
-                        <span class="n">owner</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">pr</span><span class="o">.</span><span class="n">repo</span><span class="o">.</span><span class="n">owner</span><span class="p">,</span>
-                        <span class="n">repo</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">pr</span><span class="o">.</span><span class="n">repo</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
-                        <span class="n">pull_number</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">pr</span><span class="o">.</span><span class="n">pull_number</span><span class="p">,</span>
+                <span class="n">review</span><span class="o">.</span><span class="n">conn</span><span class="o">.</span><span class="n">resolve</span><span class="p">(</span>
+                    <span class="bp">cls</span><span class="o">.</span><span class="n">ROUTES</span><span class="p">[</span><span class="s2">&quot;create&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                        <span class="n">owner</span><span class="o">=</span><span class="n">pr</span><span class="o">.</span><span class="n">repo</span><span class="o">.</span><span class="n">owner</span><span class="p">,</span>
+                        <span class="n">repo</span><span class="o">=</span><span class="n">pr</span><span class="o">.</span><span class="n">repo</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
+                        <span class="n">pull_number</span><span class="o">=</span><span class="n">pr</span><span class="o">.</span><span class="n">pull_number</span><span class="p">,</span>
                     <span class="p">)</span>
                 <span class="p">),</span>
                 <span class="n">json</span><span class="o">=</span><span class="p">{</span>
                     <span class="s2">&quot;body&quot;</span><span class="p">:</span> <span class="n">body</span><span class="p">,</span>
                     <span class="s2">&quot;event&quot;</span><span class="p">:</span> <span class="n">action</span><span class="p">,</span>
-                    <span class="s2">&quot;comments&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">pending_comments</span><span class="p">,</span>
+                    <span class="s2">&quot;comments&quot;</span><span class="p">:</span> <span class="p">[</span><span class="n">comment</span><span class="o">.</span><span class="n">to_dict</span><span class="p">()</span> <span class="k">for</span> <span class="n">comment</span> <span class="ow">in</span> <span class="n">comments</span><span class="p">],</span>
                 <span class="p">},</span>
-                <span class="n">headers</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">conn</span><span class="o">.</span><span class="n">authorization</span><span class="p">,</span>
+                <span class="n">headers</span><span class="o">=</span><span class="n">review</span><span class="o">.</span><span class="n">conn</span><span class="o">.</span><span class="n">authorization</span><span class="p">,</span>
             <span class="p">),</span>
             <span class="mi">200</span><span class="p">,</span>
-        <span class="p">)</span><span class="o">.</span><span class="n">json</span><span class="p">()</span></div></div>
+        <span class="p">)</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
+        <span class="c1"># Updated the review id</span>
+        <span class="n">review</span><span class="o">.</span><span class="n">review_id</span> <span class="o">=</span> <span class="n">response</span><span class="p">[</span><span class="s2">&quot;id&quot;</span><span class="p">]</span>
+        <span class="c1"># Fill the cache</span>
+        <span class="n">review</span><span class="o">.</span><span class="n">_info</span> <span class="o">=</span> <span class="n">response</span>
+
+        <span class="k">return</span> <span class="n">review</span></div></div>
 </pre></div>
         </article>
       </div>

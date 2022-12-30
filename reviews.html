@@ -217,29 +217,9 @@
           <section id="ghapi-reviews">
 <h1>ghapi.reviews<a class="headerlink" href="#ghapi-reviews" title="Permalink to this heading">#</a></h1>
 <dl class="py class">
-<dt class="sig sig-object py" id="ghapi.reviews.Review">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">ghapi.reviews.</span></span><span class="sig-name descname"><span class="pre">Review</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pr</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="pulls.html#ghapi.pulls.PullRequest" title="ghapi.pulls.PullRequest"><span class="pre">PullRequest</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">conn</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="connection.html#ghapi.connection.Connection" title="ghapi.connection.Connection"><span class="pre">Connection</span></a><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ghapi/reviews.html#Review"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ghapi.reviews.Review" title="Permalink to this definition">#</a></dt>
-<dd><p>Implements a Review object</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">ghapi</span> <span class="kn">import</span> <span class="n">Repository</span><span class="p">,</span> <span class="n">PullRequest</span><span class="p">,</span> <span class="n">Review</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">pr</span> <span class="o">=</span> <span class="n">PullRequest</span><span class="p">(</span><span class="n">Repository</span><span class="p">(</span><span class="s2">&quot;frgfm&quot;</span><span class="p">,</span> <span class="s2">&quot;torch-cam&quot;</span><span class="p">),</span> <span class="mi">187</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">pr</span><span class="o">.</span><span class="n">conn</span><span class="o">.</span><span class="n">set_token</span><span class="p">(</span><span class="s2">&quot;MY_DUMMY_TOKEN&quot;</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">review</span> <span class="o">=</span> <span class="n">Review</span><span class="p">(</span><span class="n">pr</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">review</span><span class="o">.</span><span class="n">stage_comment</span><span class="p">(</span><span class="s2">&quot;README.md&quot;</span><span class="p">,</span> <span class="s2">&quot;This is weird!&quot;</span><span class="p">,</span> <span class="mi">9</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">review</span><span class="o">.</span><span class="n">submit</span><span class="p">(</span><span class="s2">&quot;Thanks for the PR!</span><span class="se">\n</span><span class="s2">I left a few comments!&quot;</span><span class="p">)</span>
-</pre></div>
-</div>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>pr</strong> – a pull request object</p></li>
-<li><p><strong>conn</strong> – connection object</p></li>
-</ul>
-</dd>
-</dl>
-<dl class="py method">
-<dt class="sig sig-object py" id="ghapi.reviews.Review.stage_comment">
-<span class="sig-name descname"><span class="pre">stage_comment</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">body</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">line</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/ghapi/reviews.html#Review.stage_comment"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ghapi.reviews.Review.stage_comment" title="Permalink to this definition">#</a></dt>
-<dd><p>Stage a comment for the review</p>
+<dt class="sig sig-object py" id="ghapi.reviews.Comment">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">ghapi.reviews.</span></span><span class="sig-name descname"><span class="pre">Comment</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">body</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">line</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ghapi/reviews.html#Comment"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ghapi.reviews.Comment" title="Permalink to this definition">#</a></dt>
+<dd><p>Implements a comment object</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -247,22 +227,71 @@
 <li><p><strong>body</strong> – the text of the review comment.</p></li>
 <li><p><strong>line</strong> – the line of the blob in the pull request diff that the comment applies to. For a multi-line comment,
 the last line of the range that your comment applies to.</p></li>
-<li><p><strong>kwargs</strong> – keyword arguments for comment creation</p></li>
+<li><p><strong>kwargs</strong> – keyword arguments for comment (cf. <a class="reference external" href="https://docs.github.com/en/rest/pulls/reviews#create-a-review-for-a-pull-request--parameters">Review creation</a>)</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="ghapi.reviews.Review">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">ghapi.reviews.</span></span><span class="sig-name descname"><span class="pre">Review</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pr</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="pulls.html#ghapi.pulls.PullRequest" title="ghapi.pulls.PullRequest"><span class="pre">PullRequest</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">review_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">conn</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="connection.html#ghapi.connection.Connection" title="ghapi.connection.Connection"><span class="pre">Connection</span></a><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ghapi/reviews.html#Review"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ghapi.reviews.Review" title="Permalink to this definition">#</a></dt>
+<dd><p>Implements a Review object</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">ghapi</span> <span class="kn">import</span> <span class="n">Repository</span><span class="p">,</span> <span class="n">PullRequest</span><span class="p">,</span> <span class="n">Review</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">pr</span> <span class="o">=</span> <span class="n">PullRequest</span><span class="p">(</span><span class="n">Repository</span><span class="p">(</span><span class="s2">&quot;frgfm&quot;</span><span class="p">,</span> <span class="s2">&quot;Holocron&quot;</span><span class="p">),</span> <span class="mi">260</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">review</span> <span class="o">=</span> <span class="n">Review</span><span class="p">(</span><span class="n">pr</span><span class="p">,</span> <span class="mi">1212580495</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">review</span><span class="o">.</span><span class="n">get_info</span><span class="p">()</span>
+</pre></div>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>pr</strong> – a pull request object</p></li>
+<li><p><strong>review_id</strong> – the review identifier</p></li>
+<li><p><strong>conn</strong> – connection object</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="ghapi.reviews.Review.from_comments">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_comments</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pr</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="pulls.html#ghapi.pulls.PullRequest" title="ghapi.pulls.PullRequest"><span class="pre">PullRequest</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">body</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">comments</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#ghapi.reviews.Comment" title="ghapi.reviews.Comment"><span class="pre">Comment</span></a><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">action</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ReviewAction</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">ReviewAction.COMMENT</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">conn</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="connection.html#ghapi.connection.Connection" title="ghapi.connection.Connection"><span class="pre">Connection</span></a><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">T</span></span></span><a class="reference internal" href="_modules/ghapi/reviews.html#Review.from_comments"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ghapi.reviews.Review.from_comments" title="Permalink to this definition">#</a></dt>
+<dd><p>Submit a review from comments</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">ghapi</span> <span class="kn">import</span> <span class="n">Repository</span><span class="p">,</span> <span class="n">PullRequest</span><span class="p">,</span> <span class="n">Review</span><span class="p">,</span> <span class="n">Comment</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">pr</span> <span class="o">=</span> <span class="n">PullRequest</span><span class="p">(</span><span class="n">Repository</span><span class="p">(</span><span class="s2">&quot;owner-login&quot;</span><span class="p">,</span> <span class="s2">&quot;awesome-repo&quot;</span><span class="p">),</span> <span class="mi">1</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">pr</span><span class="o">.</span><span class="n">conn</span><span class="o">.</span><span class="n">set_token</span><span class="p">(</span><span class="s2">&quot;MY_DUMMY_TOKEN&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">comment</span> <span class="o">=</span> <span class="n">Comment</span><span class="p">(</span><span class="s2">&quot;README.md&quot;</span><span class="p">,</span> <span class="s2">&quot;This is weird!&quot;</span><span class="p">,</span> <span class="mi">9</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">review</span> <span class="o">=</span> <span class="n">Review</span><span class="o">.</span><span class="n">from_comments</span><span class="p">(</span><span class="n">pr</span><span class="p">,</span> <span class="s2">&quot;Thanks for the PR :pray:&quot;</span><span class="p">,</span> <span class="p">[</span><span class="n">comment</span><span class="p">])</span>
+</pre></div>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>pr</strong> – a pull request object</p></li>
+<li><p><strong>body</strong> – the body text of the pull request review.</p></li>
+<li><p><strong>comments</strong> – the review comments</p></li>
+<li><p><strong>action</strong> – the review action you want to perform.</p></li>
+<li><p><strong>conn</strong> – connection object</p></li>
 </ul>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="ghapi.reviews.Review.submit">
-<span class="sig-name descname"><span class="pre">submit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">body</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">action</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ReviewAction</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">ReviewAction.COMMENT</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/ghapi/reviews.html#Review.submit"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ghapi.reviews.Review.submit" title="Permalink to this definition">#</a></dt>
-<dd><p>Submit a review</p>
+<dt class="sig sig-object py" id="ghapi.reviews.Review.get_info">
+<span class="sig-name descname"><span class="pre">get_info</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/ghapi/reviews.html#Review.get_info"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ghapi.reviews.Review.get_info" title="Permalink to this definition">#</a></dt>
+<dd><p>Parses high-level information from the review payload</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ghapi.reviews.Review.list_comments">
+<span class="sig-name descname"><span class="pre">list_comments</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/ghapi/reviews.html#Review.list_comments"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ghapi.reviews.Review.list_comments" title="Permalink to this definition">#</a></dt>
+<dd><p>List the comments of a Pull Request Review.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>body</strong> – the body text of the pull request review.</p></li>
-<li><p><strong>action</strong> – the review action you want to perform.</p></li>
-</ul>
+<dd class="field-odd"><p><strong>kwargs</strong> – query parameters of <a class="reference external" href="https://docs.github.com/en/rest/pulls/reviews#list-comments-for-a-pull-request-review">List review comments</a></p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>list of comments</p>
 </dd>
 </dl>
 </dd></dl>
@@ -334,9 +363,11 @@ the last line of the range that your comment applies to.</p></li>
           <div class="toc-tree">
             <ul>
 <li><a class="reference internal" href="#">ghapi.reviews</a><ul>
+<li><a class="reference internal" href="#ghapi.reviews.Comment"><code class="docutils literal notranslate"><span class="pre">Comment</span></code></a></li>
 <li><a class="reference internal" href="#ghapi.reviews.Review"><code class="docutils literal notranslate"><span class="pre">Review</span></code></a><ul>
-<li><a class="reference internal" href="#ghapi.reviews.Review.stage_comment"><code class="docutils literal notranslate"><span class="pre">Review.stage_comment()</span></code></a></li>
-<li><a class="reference internal" href="#ghapi.reviews.Review.submit"><code class="docutils literal notranslate"><span class="pre">Review.submit()</span></code></a></li>
+<li><a class="reference internal" href="#ghapi.reviews.Review.from_comments"><code class="docutils literal notranslate"><span class="pre">Review.from_comments()</span></code></a></li>
+<li><a class="reference internal" href="#ghapi.reviews.Review.get_info"><code class="docutils literal notranslate"><span class="pre">Review.get_info()</span></code></a></li>
+<li><a class="reference internal" href="#ghapi.reviews.Review.list_comments"><code class="docutils literal notranslate"><span class="pre">Review.list_comments()</span></code></a></li>
 </ul>
 </li>
 </ul>
