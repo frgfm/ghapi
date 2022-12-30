@@ -254,6 +254,48 @@
 </dl>
 </dd></dl>
 
+<dl class="py method">
+<dt class="sig sig-object py" id="ghapi.pulls.PullRequest.list_comments">
+<span class="sig-name descname"><span class="pre">list_comments</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/ghapi/pulls.html#PullRequest.list_comments"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ghapi.pulls.PullRequest.list_comments" title="Permalink to this definition">#</a></dt>
+<dd><p>List the comments of a Pull Request.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>kwargs</strong> – query parameters of <a class="reference external" href="https://docs.github.com/en/rest/issues/comments#list-issue-comments">List issue comments</a></p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>list of comments</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ghapi.pulls.PullRequest.list_review_comments">
+<span class="sig-name descname"><span class="pre">list_review_comments</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/ghapi/pulls.html#PullRequest.list_review_comments"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ghapi.pulls.PullRequest.list_review_comments" title="Permalink to this definition">#</a></dt>
+<dd><p>List the review comments of a Pull Request.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>kwargs</strong> – query parameters of <a class="reference external" href="https://docs.github.com/en/rest/pulls/comments#list-review-comments-on-a-pull-request">List review comments</a></p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>list of review comments</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ghapi.pulls.PullRequest.list_reviews">
+<span class="sig-name descname"><span class="pre">list_reviews</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/ghapi/pulls.html#PullRequest.list_reviews"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ghapi.pulls.PullRequest.list_reviews" title="Permalink to this definition">#</a></dt>
+<dd><p>List the reviews of a Pull Request.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>kwargs</strong> – query parameters of <a class="reference external" href="https://docs.github.com/en/rest/pulls/reviews#list-reviews-for-a-pull-request">List reviews</a></p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>list of reviews</p>
+</dd>
+</dl>
+</dd></dl>
+
 </dd></dl>
 
 </section>
@@ -324,6 +366,9 @@
 <li><a class="reference internal" href="#ghapi.pulls.PullRequest"><code class="docutils literal notranslate"><span class="pre">PullRequest</span></code></a><ul>
 <li><a class="reference internal" href="#ghapi.pulls.PullRequest.get_info"><code class="docutils literal notranslate"><span class="pre">PullRequest.get_info()</span></code></a></li>
 <li><a class="reference internal" href="#ghapi.pulls.PullRequest.get_diff"><code class="docutils literal notranslate"><span class="pre">PullRequest.get_diff()</span></code></a></li>
+<li><a class="reference internal" href="#ghapi.pulls.PullRequest.list_comments"><code class="docutils literal notranslate"><span class="pre">PullRequest.list_comments()</span></code></a></li>
+<li><a class="reference internal" href="#ghapi.pulls.PullRequest.list_review_comments"><code class="docutils literal notranslate"><span class="pre">PullRequest.list_review_comments()</span></code></a></li>
+<li><a class="reference internal" href="#ghapi.pulls.PullRequest.list_reviews"><code class="docutils literal notranslate"><span class="pre">PullRequest.list_reviews()</span></code></a></li>
 </ul>
 </li>
 </ul>
