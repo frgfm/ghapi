@@ -8,7 +8,7 @@ from urllib.parse import urljoin
 
 import requests
 
-from .exceptions import HTTPRequestException
+from .exceptions import verify_status
 
 __all__ = ["Connection"]
 
@@ -26,9 +26,7 @@ class Connection:
 
     def __init__(self, token: Union[str, None] = None, url: str = "https://api.github.com") -> None:
         # Check the URL
-        response = requests.get(url)
-        if response.status_code != 200:
-            raise HTTPRequestException(response.status_code, response.text)
+        verify_status(requests.get(url), 200)
 
         self.url = url
         self.set_token(token)

@@ -9,7 +9,7 @@ from typing import Any, Dict, Union
 import requests
 
 from .connection import Connection
-from .exceptions import HTTPRequestException
+from .exceptions import verify_status
 
 __all__ = ["Search"]
 
@@ -54,10 +54,7 @@ class Search:
     def _query(self, route_id: str, query: str, **kwargs: Any) -> Dict[str, Any]:
         _params = {"q": query, **kwargs}
         route_url = self.conn.resolve(self.ROUTES[route_id])
-        response = requests.get(route_url, params=_params)
-        if response.status_code != 200:
-            raise HTTPRequestException(response.status_code, response.text)
-        return response.json()
+        return verify_status(requests.get(route_url, params=_params), 200).json()
 
     def query_repos(
         self,

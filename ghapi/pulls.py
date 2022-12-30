@@ -9,8 +9,9 @@ from typing import Any, Dict, List, Tuple, Union
 import requests
 
 from .connection import Connection
-from .exceptions import HTTPRequestException
+from .exceptions import verify_status
 from .repos import Repository
+from .utils import parse_comment, parse_pull, parse_review
 
 __all__ = ["PullRequest"]
 
@@ -106,7 +107,12 @@ class PullRequest:
         conn: connection object
     """
 
-    ROUTE = "/repos/{owner}/{repo}/pulls/{pull_number}"
+    ROUTES = {
+        "info": "/repos/{owner}/{repo}/pulls/{pull_number}",
+        "comments": "/repos/{owner}/{repo}/issues/{pull_number}/comments",
+        "review-comments": "/repos/{owner}/{repo}/pulls/{pull_number}/comments",
+        "reviews": "/repos/{owner}/{repo}/pulls/{pull_number}/reviews",
+    }
 
     def __init__(self, repo: Repository, pull_number: int, conn: Union[Connection, None] = None) -> None:
         self.repo = repo
@@ -117,60 +123,41 @@ class PullRequest:
     def reset(self) -> None:
         self._info: Union[Dict[str, Any], None] = None
         self._diff: Union[str, None] = None
+        self._comments: Union[List[Dict[str, Any]], None] = None
+        self._review_comments: Union[List[Dict[str, Any]], None] = None
+        self._reviews: Union[List[Dict[str, Any]], None] = None
+
+    def _query(
+        self, subroute: str, params: Union[Dict[str, str], None] = None, headers: Union[Dict[str, str], None] = None
+    ) -> requests.models.Response:
+        return verify_status(
+            requests.get(
+                self.conn.resolve(subroute),
+                params={} if params is None else params,
+                headers={} if headers is None else headers,
+            ),
+            200,
+        )
 
     @property
     def info(self) -> Dict[str, Any]:
         if not isinstance(self._info, dict):
-            response = requests.get(
-                self.conn.resolve(
-                    self.ROUTE.format(owner=self.repo.owner, repo=self.repo.name, pull_number=self.pull_number)
-                )
-            )
-            if response.status_code != 200:
-                raise HTTPRequestException(response.status_code, response.text)
-
-            self._info = response.json()
+            self._info = self._query(
+                self.ROUTES["info"].format(owner=self.repo.owner, repo=self.repo.name, pull_number=self.pull_number)
+            ).json()
         return self._info
 
     def get_info(self) -> Dict[str, Union[str, Dict[str, str]]]:
         """Parses high-level information from the Pull Request"""
-
-        return {
-            "title": self.info["title"],
-            "created_at": self.info["created_at"],
-            "updated_at": self.info["updated_at"],
-            "closed_at": self.info["closed_at"],
-            "merged_at": self.info["merged_at"],
-            "description": self.info["body"],
-            "labels": self.info["labels"],
-            "user": self.info["user"]["login"],
-            "mergeable": self.info["mergeable"],
-            "changed_files": self.info["changed_files"],
-            "additions": self.info["additions"],
-            "deletions": self.info["deletions"],
-            "num_comments": self.info["comments"],
-            "num_review_comments": self.info["review_comments"],
-            "base": {"branch": self.info["base"]["ref"], "sha": self.info["base"]["sha"]},
-            "head": {
-                "repo": self.info["head"]["repo"]["full_name"],
-                "branch": self.info["head"]["ref"],
-                "sha": self.info["head"]["sha"],
-            },
-        }
+        return parse_pull(self.info)
 
     @property
     def diff(self) -> str:
         if not isinstance(self._diff, str):
-            response = requests.get(
-                self.conn.resolve(
-                    self.ROUTE.format(owner=self.repo.owner, repo=self.repo.name, pull_number=self.pull_number)
-                ),
+            self._diff = self._query(
+                self.ROUTES["info"].format(owner=self.repo.owner, repo=self.repo.name, pull_number=self.pull_number),
                 headers={"Accept": "application/vnd.github.v4.diff"},
-            )
-            if response.status_code != 200:
-                raise HTTPRequestException(response.status_code, response.text)
-
-            self._diff = response.content.decode()
+            ).content.decode()
         return self._diff
 
     def get_diff(self) -> Dict[str, List[Dict[str, Any]]]:
@@ -181,3 +168,64 @@ class PullRequest:
                 the start line, the end line, and the actuall diff string.
         """
         return parse_diff_body(self.diff)
+
+    def _list_comments(self, **kwargs: Any) -> List[Dict[str, Any]]:
+        if not isinstance(self._comments, list):
+            self._comments = self._query(
+                self.ROUTES["comments"].format(
+                    owner=self.repo.owner, repo=self.repo.name, pull_number=self.pull_number
+                ),
+                params=kwargs,
+            ).json()
+        return self._comments
+
+    def list_comments(self, **kwargs: Any) -> List[Dict[str, Any]]:
+        """List the comments of a Pull Request.
+
+        Args:
+            kwargs: query parameters of `List issue comments
+                <https://docs.github.com/en/rest/issues/comments#list-issue-comments>`_
+        Returns:
+            list of comments
+        """
+        return [parse_comment(comment) for comment in self._list_comments(**kwargs)]
+
+    def _list_review_comments(self, **kwargs: Any) -> List[Dict[str, Any]]:
+        if not isinstance(self._review_comments, list):
+            self._review_comments = self._query(
+                self.ROUTES["review-comments"].format(
+                    owner=self.repo.owner, repo=self.repo.name, pull_number=self.pull_number
+                ),
+                params=kwargs,
+            ).json()
+        return self._review_comments
+
+    def list_review_comments(self, **kwargs: Any) -> List[Dict[str, Any]]:
+        """List the review comments of a Pull Request.
+
+        Args:
+            kwargs: query parameters of `List review comments
+                <https://docs.github.com/en/rest/pulls/comments#list-review-comments-on-a-pull-request>`_
+        Returns:
+            list of review comments
+        """
+        return [parse_comment(comment) for comment in self._list_review_comments(**kwargs)]
+
+    def _list_reviews(self, **kwargs: Any) -> List[Dict[str, Any]]:
+        if not isinstance(self._reviews, list):
+            self._reviews = self._query(
+                self.ROUTES["reviews"].format(owner=self.repo.owner, repo=self.repo.name, pull_number=self.pull_number),
+                params=kwargs,
+            ).json()
+        return self._reviews
+
+    def list_reviews(self, **kwargs: Any) -> List[Dict[str, Any]]:
+        """List the reviews of a Pull Request.
+
+        Args:
+            kwargs: query parameters of `List reviews
+                <https://docs.github.com/en/rest/pulls/reviews#list-reviews-for-a-pull-request>`_
+        Returns:
+            list of reviews
+        """
+        return [parse_review(review) for review in self._list_reviews(**kwargs)]

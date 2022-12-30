@@ -1,5 +1,7 @@
 import pytest
 
+from ghapi.connection import Connection
+from ghapi.exceptions import HTTPRequestException
 from ghapi.pulls import PullRequest, parse_diff_body, parse_file_diff
 from ghapi.repos import Repository
 
@@ -66,29 +68,75 @@ def test_parse_diff_body(diff_body, expected_parsing):
         assert len(out[file]) == num_sections
 
 
-@pytest.mark.parametrize(
-    "owner, repo, pr_num, payload_len, created_at",
-    [
-        ["frgfm", "torch-cam", 115, 16, "2021-11-14T16:12:44Z"],
-        ["frgfm", "torch-cam", 187, 16, "2022-09-18T17:08:50Z"],
-    ],
-)
-def test_pull_request_get_info(owner, repo, pr_num, payload_len, created_at):
-    pr = PullRequest(Repository(owner, repo), pr_num)
+def test_pull_request_get_info(mock_pull):
+    conn = Connection(url="https://www.github.com")
+    pr = PullRequest(Repository("frgfm", "ghapi", conn), 27)
+    # Wrong api url
+    with pytest.raises(HTTPRequestException):
+        pr.get_info()
+    # Fix url
+    pr.conn.url = "https://api.github.com"
+    # Set response
+    pr._info = mock_pull
     out = pr.get_info()
-    assert len(out) == payload_len
-    assert out["created_at"] == created_at
+    assert len(out) == 16
+    assert out["created_at"] == "2022-12-29T17:03:13Z"
 
 
-@pytest.mark.parametrize(
-    "owner, repo, pr_num, num_files, num_sections",
-    [
-        ["frgfm", "torch-cam", 115, 1, 1],
-        ["frgfm", "torch-cam", 187, 3, 8],
-    ],
-)
-def test_pull_request_get_diff(owner, repo, pr_num, num_files, num_sections):
-    pr = PullRequest(Repository(owner, repo), pr_num)
+def test_pull_request_get_diff(mock_pull_diff):
+    conn = Connection(url="https://www.github.com")
+    pr = PullRequest(Repository("frgfm", "ghapi", conn), 15)
+    # Wrong api url
+    with pytest.raises(HTTPRequestException):
+        pr.get_diff()
+    # Fix url
+    pr.conn.url = "https://api.github.com"
+    # Set response
+    pr._diff = mock_pull_diff
     out = pr.get_diff()
-    assert len(out) == num_files
-    assert sum(len(sections) for sections in out.values()) == num_sections
+    # num of files
+    assert len(out) == 1
+    # num of modification blocks
+    assert sum(len(sections) for sections in out.values()) == 2
+
+
+def test_pull_request_list_comments(mock_comment):
+    conn = Connection(url="https://www.github.com")
+    pr = PullRequest(Repository("frgfm", "ghapi", conn), 27)
+    # Wrong api url
+    with pytest.raises(HTTPRequestException):
+        pr.list_comments()
+    # Fix url
+    pr.conn.url = "https://api.github.com"
+    # Set response
+    pr._comments = [mock_comment]
+    out = pr.list_comments()
+    assert len(out) == 1 and isinstance(out[0], dict) and len(out[0]) == 6
+
+
+def test_pull_request_list_review_comments(mock_comment):
+    conn = Connection(url="https://www.github.com")
+    pr = PullRequest(Repository("frgfm", "ghapi", conn), 27)
+    # Wrong api url
+    with pytest.raises(HTTPRequestException):
+        pr.list_review_comments()
+    # Fix url
+    pr.conn.url = "https://api.github.com"
+    # Set response
+    pr._review_comments = [mock_comment]
+    out = pr.list_review_comments()
+    assert len(out) == 1 and isinstance(out[0], dict) and len(out[0]) == 6
+
+
+def test_pull_request_list_reviews(mock_review):
+    conn = Connection(url="https://www.github.com")
+    pr = PullRequest(Repository("frgfm", "Holocron", conn), 260)
+    # Wrong api url
+    with pytest.raises(HTTPRequestException):
+        pr.list_reviews()
+    # Fix url
+    pr.conn.url = "https://api.github.com"
+    # Set response
+    pr._comments = [mock_review]
+    out = pr.list_reviews()
+    assert len(out) == 1 and isinstance(out[0], dict) and len(out[0]) == 6

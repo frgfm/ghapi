@@ -19,6 +19,9 @@
 'module: users':
 - ghapi/users.py
 
+'module: utils':
+- ghapi/utils.py
+
 'ext: docs':
 - docs/*
 
