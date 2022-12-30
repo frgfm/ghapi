@@ -9,12 +9,19 @@ from ghapi.repos import Repository
 @pytest.mark.parametrize(
     "file_diff, expected_parsing",
     [
-        # https://github.com/frgfm/torch-cam/pull/115
+        # https://github.com/frgfm/ci-benchmark/pull/15
         [
             'a/dummy_lib/core.py b/dummy_lib/core.py\nindex e52afda..cced706 100644\n--- a/dummy_lib/core.py\n+++ b/dummy_lib/core.py\n@@ -1,12 +1,12 @@\n # Copyright (C) 2022, François-Guillaume Fernandez.\n-\n # This program is licensed under the Apache License 2.0.\n # See LICENSE or go to <https://www.apache.org/licenses/LICENSE-2.0> for full license details.\n-\n from enum import Enum\n from typing import List\n \n-__all__ = ["greet_contributor", "convert_temperature_sequences", "TemperatureScale"]\n+__all__ = [\n+    "greet_contributor", "convert_temperature_sequences", "TemperatureScale"\n+]\n \n \n class TemperatureScale(Enum):\n@@ -47,9 +47,14 @@ def convert_temperature_sequences(\n     if input_scale == output_scale:\n         return input_temperatures\n \n-    if input_scale == TemperatureScale.FAHRENHEIT and output_scale == TemperatureScale.CELSIUS:\n-        return [(fahrenheit_temp - 32) * 5 / 9 for fahrenheit_temp in input_temperatures]\n-    elif input_scale == TemperatureScale.CELSIUS and output_scale == TemperatureScale.FAHRENHEIT:\n-        return [celsius_temp * 9 / 5 + 32 for celsius_temp in input_temperatures]\n+    if (input_scale == TemperatureScale.FAHRENHEIT\n+            and output_scale == TemperatureScale.CELSIUS):\n+        return [(fahrenheit_temp - 32) * 5 / 9\n+                for fahrenheit_temp in input_temperatures]\n+    elif (input_scale == TemperatureScale.CELSIUS\n+          and output_scale == TemperatureScale.FAHRENHEIT):\n+        return [\n+            celsius_temp * 9 / 5 + 32 for celsius_temp in input_temperatures\n+        ]\n \n     raise NotImplementedError\n'.split(  # noqa: E501
                 "\n"
             ),
             [(2, 2, None, None, 6, 6), (5, 5, None, None, 9, 9), (9, 9, 7, 9, 13, 16), (50, 53, 50, 58, 24, 36)],
+        ],
+        # https://github.com/frgfm/ghapi/pull/27
+        [
+            'a/tests/fixtures/comment.json b/tests/fixtures/comment.json\nnew file mode 100644\nindex 0000000..f6a7644\n--- /dev/null\n+++ b/tests/fixtures/comment.json\n@@ -0,0 +1 @@\n+{"url":"https://api.github.com/repos/frgfm/ghapi/issues/comments/1366982953"}'.split(  # noqa: E501
+                "\n"
+            ),
+            [(None, None, 1, 1, 6, 6)],
         ],
     ],
 )
