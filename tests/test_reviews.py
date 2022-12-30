@@ -4,67 +4,62 @@ from ghapi.connection import Connection
 from ghapi.exceptions import HTTPRequestException
 from ghapi.pulls import PullRequest
 from ghapi.repos import Repository
-from ghapi.reviews import Review
+from ghapi.reviews import Comment, Review
 
 
 @pytest.mark.parametrize(
-    "owner, repo, pull_number, token, expected_error",
+    "path, body, line, kwargs, expected_dict",
     [
-        ["owner", "repo", 2, None, ValueError],
-        ["owner", "repo", 2, "DUMMY_TOKEN", None],
-    ],
-)
-def test_review_constructor(owner, repo, pull_number, token, expected_error):
-    conn = Connection(token)
-    pr = PullRequest(Repository(owner, repo, conn), pull_number)
-
-    if expected_error is None:
-        review = Review(pr)
-        assert isinstance(review.pr, PullRequest)
-        assert isinstance(review.conn, Connection) and review.conn.token == token
-        assert len(review.pending_comments) == 0
-    else:
-        with pytest.raises(ValueError):
-            Review(pr)
-
-
-@pytest.mark.parametrize(
-    "owner, repo, pull_number, path, body, line, kwargs, expected_comment",
-    [
-        ["owner", "repo", 2, "README.md", "Weird", 1, {}, {"path": "README.md", "body": "Weird", "line": 1}],
+        ["README.md", "Thanks!", 1, {}, {"path": "README.md", "body": "Thanks!", "line": 1}],
         [
-            "owner",
-            "repo",
-            2,
             "README.md",
-            "Weird",
-            3,
+            "Thanks!",
+            2,
             {"start_line": 1},
-            {"path": "README.md", "body": "Weird", "line": 3, "start_line": 1},
+            {"path": "README.md", "body": "Thanks!", "line": 2, "start_line": 1},
         ],
     ],
 )
-def test_review_stage_comment(owner, repo, pull_number, path, body, line, kwargs, expected_comment):
-    pr = PullRequest(Repository(owner, repo), pull_number)
-    pr.conn.set_token("DUMMY_TOKEN")
-    review = Review(pr)
-    assert len(review.pending_comments) == 0
-    review.stage_comment(path, body, line, **kwargs)
-    assert len(review.pending_comments) == 1
-    assert review.pending_comments[0] == expected_comment
+def test_comment(path, body, line, kwargs, expected_dict):
+    comment = Comment(path, body, line, **kwargs)
+    payload = comment.to_dict()
+    assert isinstance(payload, dict)
+    assert payload == expected_dict
 
 
-@pytest.mark.parametrize(
-    "owner, repo, pull_number, path, body, line, kwargs, expected_comment",
-    [
-        ["owner", "repo", 2, "README.md", "Weird", 1, {}, {"path": "README.md", "body": "Weird", "line": 1}],
-    ],
-)
-def test_review_submit(owner, repo, pull_number, path, body, line, kwargs, expected_comment):
-    pr = PullRequest(Repository(owner, repo), pull_number)
-    pr.conn.set_token("DUMMY_TOKEN")
-    review = Review(pr)
-    review.stage_comment(path, body, line, **kwargs)
-
+def test_review_get_info(mock_review):
+    conn = Connection(url="https://www.github.com")
+    review = Review(PullRequest(Repository("frgfm", "Holocron", conn), 260), 1212580495)
+    # Wrong api url
     with pytest.raises(HTTPRequestException):
-        review.submit("Thanks for the PR!")
+        review.get_info()
+    # Fix url
+    review.conn.url = "https://api.github.com"
+    # Set response
+    review._info = mock_review
+    out = review.get_info()
+    assert len(out) == 6
+    assert out["submitted_at"] == "2022-12-10T15:45:06Z"
+
+
+def test_review_list_comments(mock_comment):
+    conn = Connection(url="https://www.github.com")
+    review = Review(PullRequest(Repository("frgfm", "Holocron", conn), 260), 1212580495)
+    # Wrong api url
+    with pytest.raises(HTTPRequestException):
+        review.list_comments()
+    # Fix url
+    review.conn.url = "https://api.github.com"
+    # Set response
+    review._comments = [mock_comment]
+    out = review.list_comments()
+    assert len(out) == 1 and isinstance(out[0], dict) and len(out[0]) == 6
+
+
+def test_review_from_comments(mock_review):
+    conn = Connection(token="DUMMY_TOKEN", url="https://www.github.com")
+    pr = PullRequest(Repository("frgfm", "Holocron", conn), 260)
+    comment = Comment("README.md", "Thanks!", 1)
+    # Wrong api url
+    with pytest.raises(HTTPRequestException):
+        Review.from_comments(pr, "Thanks!", [comment])
