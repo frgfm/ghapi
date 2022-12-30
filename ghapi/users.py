@@ -8,7 +8,7 @@ from typing import Any, Dict, List, Union
 import requests
 
 from .connection import Connection
-from .exceptions import HTTPRequestException
+from .exceptions import verify_status
 from .utils import parse_user
 
 __all__ = ["User"]
@@ -45,11 +45,10 @@ class User:
     @property
     def info(self) -> Dict[str, Any]:
         if not isinstance(self._info, dict):
-            response = requests.get(self.conn.resolve(self.ROUTES["info"].format(username=self.username)))
-            if response.status_code != 200:
-                raise HTTPRequestException(response.status_code, response.text)
-
-            self._info = response.json()
+            self._info = verify_status(
+                requests.get(self.conn.resolve(self.ROUTES["info"].format(username=self.username))),
+                200,
+            ).json()
         return self._info
 
     def get_info(self) -> Dict[str, Union[str, Dict[str, str]]]:
@@ -59,13 +58,13 @@ class User:
 
     def _list_repos(self, **kwargs: Any) -> List[Dict[str, Any]]:
         if not isinstance(self._repos, list):
-            response = requests.get(
-                self.conn.resolve(self.ROUTES["repos"].format(username=self.username)),
-                params=kwargs,
-            )
-            if response.status_code != 200:
-                raise HTTPRequestException(response.status_code, response.text)
-            self._repos = response.json()
+            self._repos = verify_status(
+                requests.get(
+                    self.conn.resolve(self.ROUTES["repos"].format(username=self.username)),
+                    params=kwargs,
+                ),
+                200,
+            ).json()
         return self._repos
 
     def list_repos(self, **kwargs: Any) -> List[str]:

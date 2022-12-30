@@ -8,7 +8,7 @@ from typing import Any, Dict, List, Union
 import requests
 
 from .connection import Connection
-from .exceptions import HTTPRequestException
+from .exceptions import verify_status
 from .utils import parse_repo
 
 __all__ = ["Repository"]
@@ -51,11 +51,10 @@ class Repository:
     @property
     def info(self) -> Dict[str, Any]:
         if not isinstance(self._info, dict):
-            response = requests.get(self.conn.resolve(self.ROUTES["info"].format(owner=self.owner, repo=self.name)))
-            if response.status_code != 200:
-                raise HTTPRequestException(response.status_code, response.text)
-
-            self._info = response.json()
+            self._info = verify_status(
+                requests.get(self.conn.resolve(self.ROUTES["info"].format(owner=self.owner, repo=self.name))),
+                200,
+            ).json()
         return self._info
 
     def get_info(self) -> Dict[str, Any]:
@@ -64,13 +63,13 @@ class Repository:
 
     def _list_pulls(self, **kwargs: Any) -> List[Dict[str, Any]]:
         if not isinstance(self._pulls, list):
-            response = requests.get(
-                self.conn.resolve(self.ROUTES["pulls"].format(owner=self.owner, repo=self.name)),
-                params=kwargs,
-            )
-            if response.status_code != 200:
-                raise HTTPRequestException(response.status_code, response.text)
-            self._pulls = response.json()
+            self._pulls = verify_status(
+                requests.get(
+                    self.conn.resolve(self.ROUTES["pulls"].format(owner=self.owner, repo=self.name)),
+                    params=kwargs,
+                ),
+                200,
+            ).json()
         return self._pulls
 
     def list_pulls(self, **kwargs: Any) -> List[int]:

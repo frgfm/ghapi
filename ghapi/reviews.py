@@ -9,7 +9,7 @@ from typing import Any, Dict, List, Union
 import requests
 
 from .connection import Connection
-from .exceptions import HTTPRequestException
+from .exceptions import verify_status
 from .pulls import PullRequest
 
 __all__ = ["Review"]
@@ -67,21 +67,21 @@ class Review:
             body: the body text of the pull request review.
             action: the review action you want to perform.
         """
-        response = requests.post(
-            self.conn.resolve(
-                self.ROUTES["create"].format(
-                    owner=self.pr.repo.owner,
-                    repo=self.pr.repo.name,
-                    pull_number=self.pr.pull_number,
-                )
+        self.response = verify_status(
+            requests.post(
+                self.conn.resolve(
+                    self.ROUTES["create"].format(
+                        owner=self.pr.repo.owner,
+                        repo=self.pr.repo.name,
+                        pull_number=self.pr.pull_number,
+                    )
+                ),
+                json={
+                    "body": body,
+                    "event": action,
+                    "comments": self.pending_comments,
+                },
+                headers=self.conn.authorization,
             ),
-            json={
-                "body": body,
-                "event": action,
-                "comments": self.pending_comments,
-            },
-            headers=self.conn.authorization,
-        )
-        if response.status_code != 200:
-            raise HTTPRequestException(response.status_code, response.text)
-        self.response = response.json()
+            200,
+        ).json()

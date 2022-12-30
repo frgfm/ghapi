@@ -9,7 +9,7 @@ from typing import Any, Dict, List, Tuple, Union
 import requests
 
 from .connection import Connection
-from .exceptions import HTTPRequestException
+from .exceptions import verify_status
 from .repos import Repository
 from .utils import parse_comment, parse_pull, parse_review
 
@@ -130,15 +130,14 @@ class PullRequest:
     def _query(
         self, subroute: str, params: Union[Dict[str, str], None] = None, headers: Union[Dict[str, str], None] = None
     ) -> requests.models.Response:
-        response = requests.get(
-            self.conn.resolve(subroute),
-            params={} if params is None else params,
-            headers={} if headers is None else headers,
+        return verify_status(
+            requests.get(
+                self.conn.resolve(subroute),
+                params={} if params is None else params,
+                headers={} if headers is None else headers,
+            ),
+            200,
         )
-        if response.status_code != 200:
-            raise HTTPRequestException(response.status_code, response.text)
-
-        return response
 
     @property
     def info(self) -> Dict[str, Any]:
