@@ -18,7 +18,7 @@ __all__ = ["PullRequest"]
 
 OInt = Union[int, None]
 FILE_PATTERN = re.compile(r"^diff\s\-\-git\sa/(?P<prev>\S+)\sb/(?P<new>\S+)$")
-SECTION_PATTERN = re.compile(r"^@@\s\-(?P<prev>\d+),\d+\s\+(?P<new>\d+),\d+\s@@")
+SECTION_PATTERN = re.compile(r"^@@\s\-(?P<prev>\d+),\d+\s\+(?P<new>\d+)(,\d+)*\s@@")
 
 
 def parse_file_diff(line_split: List[str]) -> List[Tuple[OInt, OInt, OInt, OInt, int, int]]:
@@ -33,7 +33,7 @@ def parse_file_diff(line_split: List[str]) -> List[Tuple[OInt, OInt, OInt, OInt,
     for line_info, (_start, _end) in zip(section_info, section_limits):
         left_idx, right_idx = int(line_info["prev"]), int(line_info["new"])
         abs_start, left_start, right_start = None, None, None
-        for idx, line in enumerate(line_split[_start + 2 : _end]):
+        for idx, line in enumerate(line_split[_start + 1 : _end]):
             # Counter update
             if not line.startswith("-"):
                 right_idx += 1
@@ -43,26 +43,26 @@ def parse_file_diff(line_split: List[str]) -> List[Tuple[OInt, OInt, OInt, OInt,
             # Block
             if line.startswith("-") or line.startswith("+"):
                 if not isinstance(abs_start, int):
-                    abs_start = _start + 2 + idx
+                    abs_start = _start + 1 + idx
                 # Left block
                 if line.startswith("-") and not isinstance(left_start, int):
-                    left_start = left_idx
+                    left_start = left_idx - 1
                 # Right block
                 elif line.startswith("+") and not isinstance(right_start, int):
-                    right_start = right_idx
+                    right_start = right_idx - 1
             # End of block
             elif isinstance(abs_start, int):
-                abs_end = _start + 1 + idx
-                left_end = left_idx - 1 if isinstance(left_start, int) else None
-                right_end = right_idx - 1 if isinstance(right_start, int) else None
+                abs_end = _start + idx
+                left_end = left_idx - 2 if isinstance(left_start, int) else None
+                right_end = right_idx - 2 if isinstance(right_start, int) else None
                 blocks.append((left_start, left_end, right_start, right_end, abs_start, abs_end))
                 abs_start, left_start, right_start = None, None, None
 
         # Final one
         if isinstance(abs_start, int):
-            abs_end = _start + 2 + idx
-            left_end = left_idx if isinstance(left_start, int) else None
-            right_end = right_idx if isinstance(right_start, int) else None
+            abs_end = _start + 1 + idx
+            left_end = left_idx - 1 if isinstance(left_start, int) else None
+            right_end = right_idx - 1 if isinstance(right_start, int) else None
             blocks.append((left_start, left_end, right_start, right_end, abs_start, abs_end))
 
     return blocks
