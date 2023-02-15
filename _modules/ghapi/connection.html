@@ -221,7 +221,7 @@
 
 
 <div class="viewcode-block" id="Connection"><a class="viewcode-back" href="../../connection.html#ghapi.connection.Connection">[docs]</a><span class="k">class</span> <span class="nc">Connection</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;Implements a GH API Connection object</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Implements a GH API Connection object</span>
 
 <span class="sd">    &gt;&gt;&gt; from ghapi.connection import Connection</span>
 <span class="sd">    &gt;&gt;&gt; con = Connection(&quot;DUMMY_TOKEN&quot;)</span>
@@ -243,7 +243,7 @@
         <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">class_name</span><span class="si">}</span><span class="s2">(url=&#39;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">url</span><span class="si">}</span><span class="s2">&#39;)&quot;</span>
 
 <div class="viewcode-block" id="Connection.resolve"><a class="viewcode-back" href="../../connection.html#ghapi.connection.Connection.resolve">[docs]</a>    <span class="k">def</span> <span class="nf">resolve</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">route</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;Resolves the absolute URL of the route</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Resolves the absolute URL of the route</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            route: relative URL of the route</span>
@@ -253,7 +253,7 @@
         <span class="k">return</span> <span class="n">urljoin</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">url</span><span class="p">,</span> <span class="n">route</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="Connection.set_token"><a class="viewcode-back" href="../../connection.html#ghapi.connection.Connection.set_token">[docs]</a>    <span class="k">def</span> <span class="nf">set_token</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">token</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="kc">None</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;Sets the token used for this connection</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Sets the token used for this connection</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            token: your GitHub token (cf. https://github.com/settings/tokens)</span>
@@ -281,7 +281,7 @@
         <div class="bottom-of-page">
           <div class="left-details">
             <div class="copyright">
-                Copyright &#169; 2022, François-Guillaume Fernandez
+                Copyright &#169; 2022-2023, François-Guillaume Fernandez
             </div>
             Made with <a href="https://www.sphinx-doc.org/">Sphinx</a> and <a class="muted-link" href="https://pradyunsg.me">@pradyunsg</a>'s
             

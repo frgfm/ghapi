@@ -233,7 +233,7 @@
 
 
 <div class="viewcode-block" id="Comment"><a class="viewcode-back" href="../../reviews.html#ghapi.reviews.Comment">[docs]</a><span class="k">class</span> <span class="nc">Comment</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;Implements a comment object</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Implements a comment object</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        path: the relative path to the file that necessitates a comment.</span>
@@ -251,12 +251,12 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">kwargs</span> <span class="o">=</span> <span class="n">kwargs</span>
 
     <span class="k">def</span> <span class="nf">to_dict</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
-        <span class="sd">&quot;&quot;&quot;Dumps the comment into a dictionary processable by GitHub API&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Dumps the comment into a dictionary processable by GitHub API&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="nb">dict</span><span class="p">(</span><span class="n">path</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="p">,</span> <span class="n">body</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">body</span><span class="p">,</span> <span class="n">line</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">line</span><span class="p">,</span> <span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">kwargs</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="Review"><a class="viewcode-back" href="../../reviews.html#ghapi.reviews.Review">[docs]</a><span class="k">class</span> <span class="nc">Review</span><span class="p">:</span>
-    <span class="sa">r</span><span class="sd">&quot;&quot;&quot;Implements a Review object</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Implements a Review object</span>
 
 <span class="sd">    &gt;&gt;&gt; from ghapi import Repository, PullRequest, Review</span>
 <span class="sd">    &gt;&gt;&gt; pr = PullRequest(Repository(&quot;frgfm&quot;, &quot;Holocron&quot;), 260)</span>
@@ -304,7 +304,7 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_info</span>
 
 <div class="viewcode-block" id="Review.get_info"><a class="viewcode-back" href="../../reviews.html#ghapi.reviews.Review.get_info">[docs]</a>    <span class="k">def</span> <span class="nf">get_info</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
-        <span class="sd">&quot;&quot;&quot;Parses high-level information from the review payload&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Parses high-level information from the review payload&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="n">parse_review</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">info</span><span class="p">)</span></div>
 
     <span class="k">def</span> <span class="nf">_list_comments</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">:</span> <span class="n">Any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]:</span>
@@ -326,7 +326,7 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_comments</span>
 
 <div class="viewcode-block" id="Review.list_comments"><a class="viewcode-back" href="../../reviews.html#ghapi.reviews.Review.list_comments">[docs]</a>    <span class="k">def</span> <span class="nf">list_comments</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">:</span> <span class="n">Any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]:</span>
-        <span class="sd">&quot;&quot;&quot;List the comments of a Pull Request Review.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;List the comments of a Pull Request Review.</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            kwargs: query parameters of `List review comments</span>
@@ -345,7 +345,7 @@
         <span class="n">action</span><span class="p">:</span> <span class="n">ReviewAction</span> <span class="o">=</span> <span class="n">ReviewAction</span><span class="o">.</span><span class="n">COMMENT</span><span class="p">,</span>
         <span class="n">conn</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Connection</span><span class="p">,</span> <span class="kc">None</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">T</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;Submit a review from comments</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Submit a review from comments</span>
 
 <span class="sd">        &gt;&gt;&gt; from ghapi import Repository, PullRequest, Review, Comment</span>
 <span class="sd">        &gt;&gt;&gt; pr = PullRequest(Repository(&quot;owner-login&quot;, &quot;awesome-repo&quot;), 1)</span>
@@ -403,7 +403,7 @@
         <div class="bottom-of-page">
           <div class="left-details">
             <div class="copyright">
-                Copyright &#169; 2022, François-Guillaume Fernandez
+                Copyright &#169; 2022-2023, François-Guillaume Fernandez
             </div>
             Made with <a href="https://www.sphinx-doc.org/">Sphinx</a> and <a class="muted-link" href="https://pradyunsg.me">@pradyunsg</a>'s
             
