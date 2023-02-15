@@ -9,3 +9,4 @@ ghapi.repos
 
 	.. automethod:: get_info
 	.. automethod:: list_pulls
+	.. automethod:: get_content
