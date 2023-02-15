@@ -1,4 +1,4 @@
-# Copyright (C) 2022, François-Guillaume Fernandez.
+# Copyright (C) 2022-2023, François-Guillaume Fernandez.
 
 # This program is licensed under the Apache License 2.0.
 # See LICENSE or go to <https://www.apache.org/licenses/LICENSE-2.0> for full license details.
@@ -30,6 +30,7 @@ class Repository:
     ROUTES: Dict[str, str] = {
         "info": "/repos/{owner}/{repo}",
         "pulls": "/repos/{owner}/{repo}/pulls",
+        "content": "/repos/{owner}/{repo}/contents/{file}",
     }
 
     def __init__(self, owner: str, name: str, conn: Union[Connection, None] = None) -> None:
@@ -43,6 +44,7 @@ class Repository:
     def reset(self) -> None:
         self._info: Union[Dict[str, Any], None] = None
         self._pulls: Union[List[Dict[str, Any]], None] = None
+        self._content: Dict[str, Dict[str, Any]] = {}
 
     def __repr__(self) -> str:
         class_name = self.__class__.__name__
@@ -81,3 +83,23 @@ class Repository:
             list of pull request numbers
         """
         return [pull["number"] for pull in self._list_pulls(**kwargs)]
+
+    def get_content(self, file_path: str, **kwargs: Any) -> Dict[str, Any]:
+        """Retrieve a file content from the repository.
+
+        Args:
+            file_path: path to the file
+            kwargs: query parameters of `GitHub API
+                <https://docs.github.com/en/rest/repos/contents#get-repository-content>`_
+        Returns:
+            the file content payload
+        """
+        if self._content.get(file_path) is None:
+            self._content[file_path] = verify_status(
+                requests.get(
+                    self.conn.resolve(self.ROUTES["content"].format(owner=self.owner, repo=self.name, file=file_path)),
+                    params=kwargs,
+                ),
+                200,
+            ).json()
+        return self._content[file_path]

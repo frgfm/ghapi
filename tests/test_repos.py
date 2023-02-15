@@ -51,3 +51,17 @@ def test_repo_get_info(mock_repo):
     out = repo.get_info()
     assert len(out) == 12
     assert out["created_at"] == "2022-12-19T20:52:23Z"
+
+
+def test_repo_get_content(mock_repo):
+    conn = Connection(url="https://www.github.com")
+    repo = Repository("frgfm", "ghapi", conn)
+    # Wrong api url
+    with pytest.raises(HTTPRequestException):
+        repo.get_content("README.md")
+    # Fix url
+    repo.conn.url = "https://api.github.com"
+    # Set response
+    repo._info = mock_repo
+    out = repo.get_content("README.md")
+    assert isinstance(out, dict) and len(out) == 12
