@@ -296,6 +296,20 @@
 </dl>
 </dd></dl>
 
+<dl class="py method">
+<dt class="sig sig-object py" id="ghapi.pulls.PullRequest.list_files">
+<span class="sig-name descname"><span class="pre">list_files</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/ghapi/pulls.html#PullRequest.list_files"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ghapi.pulls.PullRequest.list_files" title="Permalink to this definition">#</a></dt>
+<dd><p>List the files of a Pull Request and their corresponding diff.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>kwargs</strong> – query parameters of <a class="reference external" href="https://docs.github.com/en/rest/pulls/pulls#list-pull-requests-files">List pull requests files</a>.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>a dictionary with the file path as keys and the list of parsed diff as values</p>
+</dd>
+</dl>
+</dd></dl>
+
 </dd></dl>
 
 </section>
@@ -369,6 +383,7 @@
 <li><a class="reference internal" href="#ghapi.pulls.PullRequest.list_comments"><code class="docutils literal notranslate"><span class="pre">PullRequest.list_comments()</span></code></a></li>
 <li><a class="reference internal" href="#ghapi.pulls.PullRequest.list_review_comments"><code class="docutils literal notranslate"><span class="pre">PullRequest.list_review_comments()</span></code></a></li>
 <li><a class="reference internal" href="#ghapi.pulls.PullRequest.list_reviews"><code class="docutils literal notranslate"><span class="pre">PullRequest.list_reviews()</span></code></a></li>
+<li><a class="reference internal" href="#ghapi.pulls.PullRequest.list_files"><code class="docutils literal notranslate"><span class="pre">PullRequest.list_files()</span></code></a></li>
 </ul>
 </li>
 </ul>
