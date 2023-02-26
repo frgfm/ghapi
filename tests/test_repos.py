@@ -72,10 +72,10 @@ def test_repo_download_archive(mock_repo):
     repo = Repository("frgfm", "ghapi", conn)
     # Wrong api url
     with pytest.raises(HTTPRequestException):
-        repo.download_archive()
+        repo.download_archive("main")
     # Fix url
     repo.conn.url = "https://api.github.com"
     # Set response
     repo._info = mock_repo
-    out = repo.download_archive()
-    assert isinstance(out, str) and out.startswith("http")
+    out = repo.download_archive("main")
+    assert isinstance(out, str) and out.startswith("https://")
