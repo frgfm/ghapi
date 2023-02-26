@@ -31,6 +31,7 @@ class Repository:
         "info": "/repos/{owner}/{repo}",
         "pulls": "/repos/{owner}/{repo}/pulls",
         "content": "/repos/{owner}/{repo}/contents/{file}",
+        "archive": "/repos/{owner}/{repo}/tarball/{ref}",
     }
 
     def __init__(self, owner: str, name: str, conn: Union[Connection, None] = None) -> None:
@@ -103,3 +104,19 @@ class Repository:
                 200,
             ).json()
         return self._content[file_path]
+
+    def download_archive(self, ref: str) -> str:
+        """Generate a download link for the repository archive.
+
+        Args:
+            ref: branch/tag reference
+        Returns:
+            the download link
+        """
+        return verify_status(
+            requests.get(
+                self.conn.resolve(self.ROUTES["archive"].format(owner=self.owner, repo=self.name, ref=ref)),
+                headers={"Accept": "application/vnd.github+json"},
+            ),
+            200,
+        ).url
