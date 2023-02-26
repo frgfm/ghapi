@@ -147,3 +147,16 @@ def test_pull_request_list_reviews(mock_review):
     pr._comments = [mock_review]
     out = pr.list_reviews()
     assert len(out) == 1 and isinstance(out[0], dict) and len(out[0]) == 6
+
+
+def test_pull_request_list_files():
+    conn = Connection(url="https://www.github.com")
+    pr = PullRequest(Repository("frgfm", "Holocron", conn), 260)
+    # Wrong api url
+    with pytest.raises(HTTPRequestException):
+        pr.list_files()
+    # Fix url
+    pr.conn.url = "https://api.github.com"
+    # Set response
+    out = pr.list_files()
+    assert out.keys() == {"api/poetry.lock"}
