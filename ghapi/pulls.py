@@ -68,6 +68,19 @@ def parse_file_diff(line_split: List[str]) -> List[Tuple[OInt, OInt, OInt, OInt,
     return blocks
 
 
+def parse_patch(file_patch: str) -> List[Dict[str, Any]]:
+    line_split = file_patch.split("\n")
+    parsed_blocks = parse_file_diff(line_split)
+    return [
+        {
+            "start": {"left": left_start, "right": right_start},
+            "end": {"left": left_end, "right": right_end},
+            "text": "\n".join(line_split[abs_start : abs_end + 1]),
+        }
+        for left_start, left_end, right_start, right_end, abs_start, abs_end in parsed_blocks
+    ]
+
+
 def parse_diff_body(diff_body: str) -> Dict[str, List[Dict[str, Any]]]:
     """This will need to be refactored using regex"""
     # Split by files
@@ -112,6 +125,7 @@ class PullRequest:
         "comments": "/repos/{owner}/{repo}/issues/{pull_number}/comments",
         "review-comments": "/repos/{owner}/{repo}/pulls/{pull_number}/comments",
         "reviews": "/repos/{owner}/{repo}/pulls/{pull_number}/reviews",
+        "files": "/repos/{owner}/{repo}/pulls/{pull_number}/files",
     }
 
     def __init__(self, repo: Repository, pull_number: int, conn: Union[Connection, None] = None) -> None:
@@ -126,6 +140,7 @@ class PullRequest:
         self._comments: Union[List[Dict[str, Any]], None] = None
         self._review_comments: Union[List[Dict[str, Any]], None] = None
         self._reviews: Union[List[Dict[str, Any]], None] = None
+        self._files: Union[List[Dict[str, Any]], None] = None
 
     def _query(
         self, subroute: str, params: Union[Dict[str, str], None] = None, headers: Union[Dict[str, str], None] = None
@@ -229,3 +244,22 @@ class PullRequest:
             list of reviews
         """
         return [parse_review(review) for review in self._list_reviews(**kwargs)]
+
+    def _list_files(self, **kwargs: Any) -> List[Dict[str, Any]]:
+        if not isinstance(self._files, list):
+            self._files = self._query(
+                self.ROUTES["files"].format(owner=self.repo.owner, repo=self.repo.name, pull_number=self.pull_number),
+                params=kwargs,
+            ).json()
+        return self._files
+
+    def list_files(self, **kwargs: Any) -> Dict[str, List[Dict[str, Any]]]:
+        """List the files of a Pull Request and their corresponding diff.
+
+        Args:
+            kwargs: query parameters of `List pull requests files
+                <https://docs.github.com/en/rest/pulls/pulls#list-pull-requests-files>`_.
+        Returns:
+            a dictionary with the file path as keys and the list of parsed diff as values
+        """
+        return {file["filename"]: parse_patch(file["patch"]) for file in self._list_files(**kwargs)}
