@@ -12,3 +12,4 @@ ghapi.pulls
     .. automethod:: list_comments
     .. automethod:: list_review_comments
     .. automethod:: list_reviews
+    .. automethod:: list_files
