@@ -65,3 +65,17 @@ def test_repo_get_content(mock_repo):
     repo._info = mock_repo
     out = repo.get_content("README.md")
     assert isinstance(out, dict) and len(out) == 12
+
+
+def test_repo_download_archive(mock_repo):
+    conn = Connection(url="https://www.github.com")
+    repo = Repository("frgfm", "ghapi", conn)
+    # Wrong api url
+    with pytest.raises(HTTPRequestException):
+        repo.download_archive()
+    # Fix url
+    repo.conn.url = "https://api.github.com"
+    # Set response
+    repo._info = mock_repo
+    out = repo.download_archive()
+    assert isinstance(out, str) and out.startswith("http")
