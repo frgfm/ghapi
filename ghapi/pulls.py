@@ -18,7 +18,7 @@ __all__ = ["PullRequest"]
 
 OInt = Union[int, None]
 FILE_PATTERN = re.compile(r"^diff\s\-\-git\sa/(?P<prev>\S+)\sb/(?P<new>\S+)$")
-SECTION_PATTERN = re.compile(r"^@@\s\-(?P<prev>\d+),\d+\s\+(?P<new>\d+)(,\d+)*\s@@")
+SECTION_PATTERN = re.compile(r"^@@\s\-(?P<prev>\d+)(,\d+)*\s\+(?P<new>\d+)(,\d+)*\s@@")
 
 
 def parse_file_diff(line_split: List[str]) -> List[Tuple[OInt, OInt, OInt, OInt, int, int]]:
