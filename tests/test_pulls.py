@@ -23,6 +23,13 @@ from ghapi.repos import Repository
             ),
             [(None, None, 1, 1, 6, 6)],
         ],
+        # variant of https://github.com/frgfm/ghapi/pull/27
+        [
+            'a/tests/fixtures/comment.json b/tests/fixtures/comment.json\nnew file mode 100644\nindex 0000000..f6a7644\n--- /dev/null\n+++ b/tests/fixtures/comment.json\n@@ -0 +1,2 @@\n+{"url":"https://api.github.com/repos/frgfm/ghapi/issues/comments/1366982953"}'.split(  # noqa: E501
+                "\n"
+            ),
+            [(None, None, 1, 1, 6, 6)],
+        ],
     ],
 )
 def test_parse_file_diff(file_diff, expected_parsing):
