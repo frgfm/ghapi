@@ -10,7 +10,7 @@ from pathlib import Path
 from setuptools import setup
 
 PKG_INDEX = "ghapi-client"
-VERSION = os.getenv("BUILD_VERSION", "0.2.1.dev0")
+VERSION = os.getenv("BUILD_VERSION", "0.3.1.dev0")
 
 
 if __name__ == "__main__":
